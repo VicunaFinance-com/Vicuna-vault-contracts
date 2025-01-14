@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.19;
+pragma solidity ^0.8.19;
 
 import { ERC20Upgradeable } from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
@@ -104,18 +104,11 @@ contract BeefyRewardPool is ERC20Upgradeable, OwnableUpgradeable {
 
     /// @notice Initialize the contract, callable only once
     /// @param _stakedToken BIFI token address
-    function initialize(address _stakedToken) external initializer {
-        __ERC20_init("Beefy Reward Pool", "rBIFI");
+    function initialize(address _stakedToken, string calldata _name, string calldata _symbol) external initializer {
+        __ERC20_init(_name, _symbol);
         __Ownable_init();
         stakedToken = IERC20Upgradeable(_stakedToken);
         rewardMax = 100;
-    }
-
-    /// @notice Stake BIFI tokens
-    /// @dev An equal number of receipt tokens will be minted to the caller
-    /// @param _amount Amount of BIFI to stake
-    function stake(uint256 _amount) external update(msg.sender) {
-        _stake(msg.sender, _amount);
     }
 
     /// @notice Stake BIFI tokens with a permit

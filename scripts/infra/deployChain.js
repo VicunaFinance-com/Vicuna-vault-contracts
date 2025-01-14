@@ -65,7 +65,7 @@ async function main() {
   console.log("Deploying BeefyFeeConfigurator");
 
   const constructorArguments = [keeper, config.totalLimit];
-  const transparentUpgradableProxy = await upgrades.deployProxy(BeefyFeeConfiguratorFactory, constructorArguments);
+  const transparentUpgradableProxy = await upgrades.deployProxy(BeefyFeeConfiguratorFactory, constructorArguments, { unsafeAllow: ['delegatecall']});
   await transparentUpgradableProxy.deployed();
 
   await transparentUpgradableProxy.setFeeCategory(0, BigInt(config.totalLimit), BigInt(config.callFee), BigInt(config.strategist), "default", true, true);
@@ -84,16 +84,59 @@ async function main() {
   await vault7.deployed();
   console.log(`Vault V7 deployed to ${vault7.address}`);
 
-  const vaultFactory = await VaultFactory.deploy(vault7.address);
+  const vaultFactory = await VaultFactory.deploy(vault7.address, {gasLimit: 350000});
   await vaultFactory.deployed();
   console.log(`Vault Factory deployed to ${vaultFactory.address}`);
+
+  console.log("Deploying Beefy Wrapper Factory");
+  const BeefyWrapperFactory = await ethers.getContractFactory("BeefyWrapperFactory");
+  const wrapperFactory = await BeefyWrapperFactory.deploy();
+  await wrapperFactory.deployed();
+  console.log(`Beefy Wrapper Factory deployed to ${wrapperFactory.address}`);
+
+  console.log("Deploying Beefy Treasury");
+  const BeefyTreasury = await ethers.getContractFactory("BeefyTreasury");
+  const beefyTreasury = await BeefyTreasury.deploy();
+  await beefyTreasury.deployed();
+  await beefyTreasury.transferOwnership(config.treasuryMultisig);
+  console.log(`Beefy Treasury deployed to ${beefyTreasury.address}`);
+
+  console.log("Deploying BIFI");
+  const BIFI = await ethers.getContractFactory("BIFI");
+  const bifi = await BIFI.deploy(beefyTreasury.address);
+  await bifi.deployed();
+  console.log(`BIFI deployed to ${bifi.address}`);
+
+  console.log("Deploying BeefyRewardPool");
+  const BeefyRewardPool = await ethers.getContractFactory("BeefyRewardPool");
+  const beefyRewardPool = await BeefyRewardPool.deploy();
+  await beefyRewardPool.deployed();
+  await beefyRewardPool.initialize(bifi.address);
+  console.log(`BeefyRewardPool deployed to ${beefyRewardPool.address}`);
 
   console.log("Deploying Beefy Swapper");
   const BeefySwapper = await ethers.getContractFactory("BeefySwapper");
   const beefySwapper = await BeefySwapper.deploy();
   await beefySwapper.deployed();
-
   console.log(`Beefy Swapper deployed to ${beefySwapper.address}`);
+
+  console.log('Deploying Beefy Oracle Chainlink');
+  const BeefyOracleChainlink = await ethers.getContractFactory("BeefyOracleChainlink");
+  const beefyOracleChainlink = await BeefyOracleChainlink.deploy();
+  await beefyOracleChainlink.deployed();
+  console.log(`Beefy Oracle Chainlink deployed to ${beefyOracleChainlink.address}`);
+
+  console.log('Deploying Beefy Oracle Uniswap V2');
+  const BeefyOracleUniswapV2 = await ethers.getContractFactory("BeefyOracleUniswapV2");
+  const beefyOracleUniswapV2 = await BeefyOracleUniswapV2.deploy();
+  await beefyOracleUniswapV2.deployed();
+  console.log(`Beefy Oracle Uniswap V2 deployed to ${beefyOracleUniswapV2.address}`);
+
+  console.log('Deploying Beefy Oracle Uniswap V3');
+  const BeefyOracleUniswapV3 = await ethers.getContractFactory("BeefyOracleUniswapV3");
+  const beefyOracleUniswapV3 = await BeefyOracleUniswapV3.deploy();
+  await beefyOracleUniswapV3.deployed();
+  console.log(`Beefy Oracle Uniswap V3 deployed to ${beefyOracleUniswapV3.address}`);
 
   console.log('Deploying Beefy Oracle');
   const BeefyOracle = await ethers.getContractFactory("BeefyOracle");
@@ -116,34 +159,34 @@ async function main() {
       treasuryMultisig,
       strategyOwner: '${stratOwner.address}',
       vaultOwner: '${vaultOwner.address}',
-      keeper: '0x4fED5491693007f0CD49f4614FFC38Ab6A04B619',
+      keeper: 'X' // Wallet with some management capabilities,
       treasurer: treasuryMultisig,
       launchpoolOwner: devMultisig,
-      rewardPool: '${ethers.constants.AddressZero}',
-      treasury: '${ethers.constants.AddressZero}',
-      beefyFeeRecipient: '0x02Ae4716B9D5d48Db1445814b0eDE39f5c28264B',
+      rewardPool: '${beefyRewardPool.address}',
+      treasury: '${beefyTreasury.address}',
+      beefyFeeRecipient: 'X' // Wallet to receive fees,
       multicall: '${multicall.address}',
-      bifiMaxiStrategy: '${ethers.constants.AddressZero}',
-      voter: '0x5e1caC103F943Cd84A1E92dAde4145664ebf692A',
+      bifiMaxiStrategy: 'X' // Stategy vault, can be ignored?,
+      voter: 'X' // Wallet? Seems to be used in some strategies,
       beefyFeeConfig: '${transparentUpgradableProxy.address}',
       vaultFactory: '${vaultFactory.address}',
-      wrapperFactory: '${ethers.constants.AddressZero}',
-      zap: '${ethers.constants.AddressZero}',
-      zapTokenManager: '${ethers.constants.AddressZero}',
-      treasurySwapper: '${ethers.constants.AddressZero}',
+      wrapperFactory: '${wrapperFactory.address}',
+      zap: 'X' // Zap feature,
+      zapTokenManager: 'X' // Zap feature,
+      treasurySwapper: 'X' // Zap feature? -> BeefySwapperTreasury,
     
       /// CLM Contracts
-      clmFactory: '${ethers.constants.AddressZero}',
-      clmStrategyFactory: '${ethers.constants.AddressZero}',
-      clmRewardPoolFactory: '${ethers.constants.AddressZero}',
-      positionMulticall: '${ethers.constants.AddressZero}',
+      clmFactory: 'X',
+      clmStrategyFactory: 'X',
+      clmRewardPoolFactory: 'X',
+      positionMulticall: 'X',
     
       /// Beefy Swapper Contracts
       beefySwapper: '${beefySwapper.address}',
       beefyOracle: '${beefyOracle.address}',
-      beefyOracleChainlink: '${ethers.constants.AddressZero}',
-      beefyOracleUniswapV2: '${ethers.constants.AddressZero}',
-      beefyOracleUniswapV3: '${ethers.constants.AddressZero}',
+      beefyOracleChainlink: '${beefyOracleChainlink.address}',
+      beefyOracleUniswapV2: '${beefyOracleUniswapV2.address}',
+      beefyOracleUniswapV3: '${beefyOracleUniswapV3.address}',
     } as const;
   `)
 }

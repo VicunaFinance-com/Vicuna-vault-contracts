@@ -5,7 +5,6 @@ import "@nomiclabs/hardhat-etherscan";
 import "@openzeppelin/hardhat-upgrades";
 import "hardhat-gas-reporter";
 import "hardhat-contract-sizer";
-// import "@typechain/hardhat";
 import "./tasks";
 
 import { HardhatUserConfig } from "hardhat/src/types/config";
@@ -201,6 +200,16 @@ const config: DeploymentConfig = {
       url: process.env.SEI_RPC || "https://evm-rpc.sei-apis.com",
       chainId: 1329,
       accounts,
+    },
+    blaze: {
+      url: process.env.BLAZE_RPC || "https://rpc.blaze.soniclabs.com",
+      chainId: 57054,
+      accounts,
+    },
+    sonic: {
+      url: process.env.SONIC_RPC || "https://rpc.soniclabs.com",
+      chainId: 146,
+      accounts,
     }
   },
   etherscan: {
@@ -227,6 +236,8 @@ const config: DeploymentConfig = {
       avax: process.env.AVAX_API_KEY!,
       manta: 'someKey',
       sei: 'sei',
+      sonic: process.env.SONIC_API_KEY!,
+      blaze: process.env.BLAZE_API_KEY!,
     },
     customChains: [
       {
@@ -341,6 +352,22 @@ const config: DeploymentConfig = {
           browserURL: "https://seitrace.com"
         }
       },
+      {
+        network: "sonic",
+        chainId: 146,
+        urls: {
+          apiURL: "https://api.sonicscan.org/api",
+          browserURL: "https://sonicscan.org"
+        }
+      },
+      {
+        network: "blaze",
+        chainId: 57054,
+        urls: {
+          apiURL: "https://api-testnet.sonicscan.org/api",
+          browserURL: "https://testnet.sonicscan.org"
+        }
+      }
     ],
   },
   solidity: {
