@@ -3,20 +3,13 @@ import { BEETS, EQUAL, BEETS_STAKED_SONIC, EQUALIZER_USDC_EQUAL_PAIR, PYTH_CENTR
 const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
 
-// BeefyFeeConfigurator: 0x4280521636014aad719540766eb4b24BAe589163
-// BeefyVaultV7Factory: 0x4FCBC170A0A58B77c1384E35fdd5529A5721099f
-// BeefyVaultConcLiqFactory: 0x48d38484cf74903F6727C039424cCD2b0185Ee7f
-// BeefyOracleChainlink: 0x4555e305C4B1455ec3B1F7208d4272B6C8aF0eDa
-// BeefyOracleUniswapV2: 0x8D787EE687F385D73204484342E57E6F1e5Eb7BA
-// BeefySwapper: 0xF993b888c7833A2e72D88503ADaA96F0f4a59711
-
 // Infrastucture
-const BEEFY_ORACLE = "0x8964Cf7cd27A3F4135330931e49dbF2b999282f7";
-const BEEFY_ORACLE_BALANCER = "0x9d803D0fd17a26DF280F254Fb4B93Eab7898C42A";
-const BEEFY_PYTH_ORACLE = "0x6144D4E065B6107Cb8A92c9780631570e40DcE4F";
-const BEEFY_UNISWAP_V3_ORACLE = "0x3D27906c6b304925710f72264Da3fd1825aED9E9";
-const BEEFY_SOLIDLY_ORACLE = "0x8655aF7eD14B0A415eEe35d26De2f4Cdc9B471F9"
-const BEEFY_ORACLE_OVERRIDE = "0x1Cf181BbE3038B4452B0C7CA924D5491f603156B"
+const BEEFY_ORACLE = "0x679d46F481e57BDaF081c1f8dB745ccF05F151F7";
+const BEEFY_ORACLE_BALANCER = "0x78fbf5EA24AC588823f6c25C533ef89a800728ae";
+const BEEFY_PYTH_ORACLE = "0xe4826DA911A142Db7C5142e7C0ce56685695bfD7";
+const BEEFY_UNISWAP_V3_ORACLE = "0x24f1d58ab77b5adf5C6506Bb1F5EDA481C3755F6";
+const BEEFY_SOLIDLY_ORACLE = "0xcCe4332fB40dCb40B5AE213eA36E35386C22Af9b"
+const BEEFY_ORACLE_OVERRIDE = "0x59C256fBDcabc6a6bEAeBD8d10e02AAEf9cfCB11"
 const BEEFY_ORACLE_OVERRIDE_2 = "0xdDC640215E14fC5E9589648b8901ec7f8B678adD"
 
 // Others
@@ -29,27 +22,27 @@ async function main() {
     const BeefyOracle = await ethers.getContractFactory("BeefyOracle");
     const beefyOracle = BeefyOracle.attach(BEEFY_ORACLE);
 
-    // console.log("Setting Oracle for wETH using Pyth");
-    // await beefyOracle.setOracle(WRAPPER_ETH, BEEFY_PYTH_ORACLE, pythCallData(PYTH_WETH_USD_PRICE_FEED));
-    // console.log("Oracle set for wETH");
+    console.log("Setting Oracle for wETH using Pyth");
+    await beefyOracle.setOracle(WRAPPER_ETH, BEEFY_PYTH_ORACLE, pythCallData(PYTH_WETH_USD_PRICE_FEED));
+    console.log("Oracle set for wETH");
 
-    // console.log("Setting Oracle for USDC using Pyth");
-    // await beefyOracle.setOracle(USDC, BEEFY_PYTH_ORACLE, pythCallData(PYTH_USDC_USD_PRICE_FEED));
-    // console.log("Oracle set for USDC");
+    console.log("Setting Oracle for USDC using Pyth");
+    await beefyOracle.setOracle(USDC, BEEFY_PYTH_ORACLE, pythCallData(PYTH_USDC_USD_PRICE_FEED));
+    console.log("Oracle set for USDC");
 
-    // console.log("Waiting for chain propagation");
-    // await new Promise(resolve => setTimeout(resolve, 5000))
+    console.log("Waiting for chain propagation");
+    await new Promise(resolve => setTimeout(resolve, 5000))
 
-    // console.log("Setting Oracle for wS using Wagmi Uniswap V3");
-    // await beefyOracle.setOracle(WRAPPED_NATIVE, BEEFY_UNISWAP_V3_ORACLE, uniswapV3CallData([USDC, WRAPPED_NATIVE], [WAGMI_UNISWAP_V3_USDC_WS_PAIR], [UNISWAP_TWAP]));
-    // console.log("Oracle set for wS");
+    console.log("Setting Oracle for wS using Wagmi Uniswap V3");
+    await beefyOracle.setOracle(WRAPPED_NATIVE, BEEFY_UNISWAP_V3_ORACLE, uniswapV3CallData([USDC, WRAPPED_NATIVE], [WAGMI_UNISWAP_V3_USDC_WS_PAIR], [UNISWAP_TWAP]));
+    console.log("Oracle set for wS");
 
-    // console.log("Waiting for chain propagation");
-    // await new Promise(resolve => setTimeout(resolve, 5000))
+    console.log("Waiting for chain propagation");
+    await new Promise(resolve => setTimeout(resolve, 5000))
 
-    // console.log("Setting Oracle for EQUAL using Equalizer");
-    // await beefyOracle.setOracle(EQUAL, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, EQUAL], [EQUALIZER_USDC_EQUAL_PAIR], [SOLIDLY_TWAP]));
-    // console.log("Oracle set for EQUAL");
+    console.log("Setting Oracle for EQUAL using Equalizer");
+    await beefyOracle.setOracle(EQUAL, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, EQUAL], [EQUALIZER_USDC_EQUAL_PAIR], [SOLIDLY_TWAP]));
+    console.log("Oracle set for EQUAL");
 
     console.log("Setting Oracle for stS using Equalizer");
     await beefyOracle.setOracle(BEETS_STAKED_SONIC, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, BEETS_STAKED_SONIC], [EQUALIZER_WS_STS_PAIR], [SOLIDLY_TWAP]));

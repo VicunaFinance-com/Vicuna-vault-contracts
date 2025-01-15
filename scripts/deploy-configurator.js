@@ -5,7 +5,7 @@ const hardhat = require("hardhat");
 
 const ethers = hardhat.ethers;
 
-const DEV_MULTISIG = "0x2A86Ebd12573f4633453899156DA81345AC1d57D";
+const DEV_MULTISIG = KEEPER;
 const TOTAL_FEE_LIMIT = "95000000000000000";
 const CALLER_FEE = "500000000000000";
 const STRATEGIST_FEE = "5000000000000000";

@@ -5,7 +5,7 @@ const hardhat = require("hardhat");
 
 const ethers = hardhat.ethers;
 
-const FEE_CONFIGURATOR = "0x4280521636014aad719540766eb4b24BAe589163"
+const FEE_CONFIGURATOR = "0x542D0AaF607f251D26aFB35bFA929cD61c634F96"
 
 async function main() {
     await hardhat.run("compile");
