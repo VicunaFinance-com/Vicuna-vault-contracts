@@ -108,11 +108,17 @@ async function main() {
   // await beefySwapper.setSwapInfo(BEETS_STAKED_SONIC, PUT_A_RING_ON_IT, BALANCER_WS_PAROI_SWAP_INFO);
   // console.log("Swap info set for wS to Put A Ring On It using Balancer");
 
-  console.log("Setting swap info for wS to stS using Equalizer");
-  const EQUALIZER_WS_STS = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, BEETS_STAKED_SONIC, true]], BEEFY_SWAPPER, UINT256_MAX)
-  const EQUALIZER_WS_STS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_STS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
-  await beefySwapper.setSwapInfo(WRAPPED_NATIVE, BEETS_STAKED_SONIC, EQUALIZER_WS_STS_SWAP_INFO);
-  console.log("Swap info set for wS to stS");
+  // console.log("Setting swap info for wS to stS using Equalizer");
+  // const EQUALIZER_WS_STS = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, BEETS_STAKED_SONIC, true]], BEEFY_SWAPPER, UINT256_MAX)
+  // const EQUALIZER_WS_STS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_STS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, BEETS_STAKED_SONIC, EQUALIZER_WS_STS_SWAP_INFO);
+  // console.log("Swap info set for wS to stS");
+
+  console.log("Setting swap info for stS to wS using Equalizer");
+  const EQUALIZER_STS_WS = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[BEETS_STAKED_SONIC, WRAPPED_NATIVE, true]], BEEFY_SWAPPER, UINT256_MAX)
+  const EQUALIZER_STS_WS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_STS_WS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  await beefySwapper.setSwapInfo(BEETS_STAKED_SONIC, WRAPPED_NATIVE, EQUALIZER_STS_WS_SWAP_INFO);
+  console.log("Swap info set for stS to wS");
 
 }
 
