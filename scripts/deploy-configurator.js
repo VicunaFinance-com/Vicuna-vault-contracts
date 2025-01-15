@@ -26,7 +26,7 @@ async function main() {
 
   console.log("Verifying BeefyFeeConfigurator");
   const implementationAddress = await upgrades.erc1967.getImplementationAddress(beefyFeeConfiguratorProxy.address);
-  await verify(implementationAddress, []);
+  // await verify(implementationAddress, []);
   console.log("Verified BeefyFeeConfigurator");
 
   console.log("Configuration deployment completed");

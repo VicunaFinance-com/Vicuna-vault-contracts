@@ -3,14 +3,20 @@ import { BEETS, EQUAL, BEETS_STAKED_SONIC, EQUALIZER_USDC_EQUAL_PAIR, PYTH_CENTR
 const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
 
-// Infrastucture
-const BEEFY_ORACLE = "0xE7E4c12772432d4c744314bFb83682684D1ec4ad";
-const BEEFY_ORACLE_BALANCER = "0x354A69Ef542842f864BAffcf9bA7a21Fd31Aeb16";
-const BEEFY_PYTH_ORACLE = "0x06De26E3191d97624F47D51dfAD80e9Eb6DD9dE6";
-const BEEFY_UNISWAP_V3_ORACLE = "0x99eEd78D51709b670d4247236bA14C48B17Fc913";
-const BEEFY_SOLIDLY_ORACLE = "0x3b706368Bd073CFD81AD6f5972aC45EFAEfDAf4e"
-const BEEFY_ORACLE_OVERRIDE = "0x2bDf7bE3e24E20a973F68BAf886b25600e4Ec47b"
+// BeefyFeeConfigurator: 0x4280521636014aad719540766eb4b24BAe589163
+// BeefyVaultV7Factory: 0x4FCBC170A0A58B77c1384E35fdd5529A5721099f
+// BeefyVaultConcLiqFactory: 0x48d38484cf74903F6727C039424cCD2b0185Ee7f
+// BeefyOracleChainlink: 0x4555e305C4B1455ec3B1F7208d4272B6C8aF0eDa
+// BeefyOracleUniswapV2: 0x8D787EE687F385D73204484342E57E6F1e5Eb7BA
+// BeefySwapper: 0xF993b888c7833A2e72D88503ADaA96F0f4a59711
 
+// Infrastucture
+const BEEFY_ORACLE = "0x8964Cf7cd27A3F4135330931e49dbF2b999282f7";
+const BEEFY_ORACLE_BALANCER = "0x9d803D0fd17a26DF280F254Fb4B93Eab7898C42A";
+const BEEFY_PYTH_ORACLE = "0x6144D4E065B6107Cb8A92c9780631570e40DcE4F";
+const BEEFY_UNISWAP_V3_ORACLE = "0x3D27906c6b304925710f72264Da3fd1825aED9E9";
+const BEEFY_SOLIDLY_ORACLE = "0x8655aF7eD14B0A415eEe35d26De2f4Cdc9B471F9"
+const BEEFY_ORACLE_OVERRIDE = "0x1Cf181BbE3038B4452B0C7CA924D5491f603156B"
 const BEEFY_ORACLE_OVERRIDE_2 = "0xdDC640215E14fC5E9589648b8901ec7f8B678adD"
 
 // Others
@@ -45,21 +51,21 @@ async function main() {
     // await beefyOracle.setOracle(EQUAL, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, EQUAL], [EQUALIZER_USDC_EQUAL_PAIR], [SOLIDLY_TWAP]));
     // console.log("Oracle set for EQUAL");
 
-    // console.log("Setting Oracle for stS using Equalizer");
-    // await beefyOracle.setOracle(STS, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, STS], [EQUALIZER_WS_STS_PAIR], [SOLIDLY_TWAP]));
-    // console.log("Oracle set for stS");
+    console.log("Setting Oracle for stS using Equalizer");
+    await beefyOracle.setOracle(BEETS_STAKED_SONIC, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, BEETS_STAKED_SONIC], [EQUALIZER_WS_STS_PAIR], [SOLIDLY_TWAP]));
+    console.log("Oracle set for stS");
 
-    // console.log("Setting Oracle for BEETS using Oracle Override");
-    // await beefyOracle.setOracle(BEETS, BEEFY_ORACLE_OVERRIDE_2, []);
-    // console.log("Oracle set for BEETS");
+    console.log("Setting Oracle for BEETS using Oracle Override");
+    await beefyOracle.setOracle(BEETS, BEEFY_ORACLE_OVERRIDE_2, []);
+    console.log("Oracle set for BEETS");
 
-    // console.log("Setting Oracle for Stacked Sonic Symphony using Oracle Override");
-    // await beefyOracle.setOracle(STACKED_SONIC_SYMPHONY, BEEFY_ORACLE_OVERRIDE, []);
-    // console.log("Oracle set for Stacked Sonic Symphony");
+    console.log("Setting Oracle for Stacked Sonic Symphony using Oracle Override");
+    await beefyOracle.setOracle(STACKED_SONIC_SYMPHONY, BEEFY_ORACLE_OVERRIDE, []);
+    console.log("Oracle set for Stacked Sonic Symphony");
 
-    // console.log("Setting Oracle for Ringing Stable Beets using Oracle Override");
-    // await beefyOracle.setOracle(RINGING_STABLE_BEETS, BEEFY_ORACLE_OVERRIDE, []);
-    // console.log("Oracle set for Ringing Stable Beets");
+    console.log("Setting Oracle for Ringing Stable Beets using Oracle Override");
+    await beefyOracle.setOracle(RINGING_STABLE_BEETS, BEEFY_ORACLE_OVERRIDE, []);
+    console.log("Oracle set for Ringing Stable Beets");
 
     console.log("Setting Oracle for Put A Ring On It using Oracle Override");
     await beefyOracle.setOracle(PUT_A_RING_ON_IT, BEEFY_ORACLE_OVERRIDE, []);
