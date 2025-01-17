@@ -1,6 +1,6 @@
 import VelodromeRouterAbi from "../data/abi/VelodromeRouter.json";
 import BalancerVaultAbi from "../data/abi/BalancerVault.json";
-import { BEETS, EQUAL, EQUALIZER_ROUTER_O2, UINT256_MAX, USDC, WRAPPED_NATIVE, WRAPPER_ETH, BALANCER_VAULT, BEETS_STAKED_SONIC, INT256_MAX, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, STACKED_SONIC_SYMPHONY } from "./config-sonic";
+import { BEETS, EQUAL, EQUALIZER_ROUTER_O2, UINT256_MAX, USDC, WRAPPED_NATIVE, WRAPPER_ETH, BALANCER_VAULT, BEETS_STAKED_SONIC, INT256_MAX, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, STACKED_SONIC_SYMPHONY, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY } from "./config-sonic";
 
 const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
@@ -54,6 +54,90 @@ async function main() {
   // const EQUALIZER_WS_EQUAL_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_EQUAL.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
   // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, EQUAL, EQUALIZER_WS_EQUAL_SWAP_INFO);
   // console.log("Swap info set for wS to EQUAL");
+
+  // console.log("Setting swap info for wS to BRUSH using Equalizer");
+  // const EQUALIZER_WS_BRUSH = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, BRUSH, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_WS_BRUSH_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_BRUSH.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, BRUSH, EQUALIZER_WS_BRUSH_SWAP_INFO);
+  // console.log("Swap info set for wS to BRUSH");
+
+  // console.log("Setting swap info for BRUSH to wS using Equalizer");
+  // const EQUALIZER_BRUSH_WS = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[BRUSH, WRAPPED_NATIVE, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_BRUSH_WS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_BRUSH_WS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(BRUSH, WRAPPED_NATIVE, EQUALIZER_BRUSH_WS_SWAP_INFO);
+  // console.log("Swap info set for BRUSH to ws");
+
+  // console.log("Setting swap info for wS to fSONIC using Equalizer");
+  // const EQUALIZER_WS_FSONIC = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, FSONIC, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_WS_FSONIC_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_FSONIC.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, FSONIC, EQUALIZER_WS_FSONIC_SWAP_INFO);
+  // console.log("Swap info set for wS to fSONIC");
+
+  // console.log("Setting swap info for fSONIC to wS using Equalizer");
+  // const EQUALIZER_FSONIC_WS = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[FSONIC, WRAPPED_NATIVE, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_FSONIC_WS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_FSONIC_WS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(FSONIC, WRAPPED_NATIVE, EQUALIZER_FSONIC_WS_SWAP_INFO);
+  // console.log("Swap info set for fSONIC to wS");
+
+  // console.log("Setting swap info for wS to GOGLZ using Equalizer");
+  // const EQUALIZER_WS_GOGLZ = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, GOGLZ, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_WS_GOGLZ_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_GOGLZ.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, GOGLZ, EQUALIZER_WS_GOGLZ_SWAP_INFO);
+  // console.log("Swap info set for wS to GOGLZ");
+
+  // console.log("Setting swap info for GOGLZ to wS using Equalizer");
+  // const EQUALIZER_GOGLZ_WS = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[GOGLZ, WRAPPED_NATIVE, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_GOGLZ_WS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_GOGLZ_WS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(GOGLZ, WRAPPED_NATIVE, EQUALIZER_GOGLZ_WS_SWAP_INFO);
+  // console.log("Swap info set for GOGLZ to wS");
+
+  // console.log("Setting swap info for wS to FIERY using Equalizer");
+  // const EQUALIZER_WS_FIERY = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, FIERY, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_WS_FIERY_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_FIERY.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, FIERY, EQUALIZER_WS_FIERY_SWAP_INFO);
+  // console.log("Swap info set for wS to FIERY");
+
+  // console.log("Setting swap info for FIERY to wS using Equalizer");
+  // const EQUALIZER_FIERY_WS = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[FIERY, WRAPPED_NATIVE, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_FIERY_WS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_FIERY_WS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(FIERY, WRAPPED_NATIVE, EQUALIZER_FIERY_WS_SWAP_INFO);
+  // console.log("Swap info set for FIERY to wS");
+
+  // console.log("Setting swap info for wS to ECO using Equalizer");
+  // const EQUALIZER_WS_ECO = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, ECO, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_WS_ECO_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_ECO.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, ECO, EQUALIZER_WS_ECO_SWAP_INFO);
+  // console.log("Swap info set for wS to ECO");
+
+  // console.log("Setting swap info for ECO to wS using Equalizer");
+  // const EQUALIZER_ECO_WS = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[ECO, WRAPPED_NATIVE, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_ECO_WS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_ECO_WS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(ECO, WRAPPED_NATIVE, EQUALIZER_ECO_WS_SWAP_INFO);
+  // console.log("Swap info set for ECO to wS");
+
+  // console.log("Setting swap info for wS to Anon using Equalizer");
+  // const EQUALIZER_WS_ANON = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, ANON, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_WS_ANON_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_ANON.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, ANON, EQUALIZER_WS_ANON_SWAP_INFO);
+  // console.log("Swap info set for wS to Anon");
+
+  // console.log("Setting swap info for Anon to wS using Equalizer");
+  // const EQUALIZER_ANON_WS = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[ANON, WRAPPED_NATIVE, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_ANON_WS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_ANON_WS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(ANON, WRAPPED_NATIVE, EQUALIZER_ANON_WS_SWAP_INFO);
+  // console.log("Swap info set for Anon to wS");
+
+  // console.log("Setting swap info for wS to HEDGY using Equalizer");
+  // const EQUALIZER_WS_HEDGY = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, HEDGY, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_WS_HEDGY_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_HEDGY.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, HEDGY, EQUALIZER_WS_HEDGY_SWAP_INFO);
+  // console.log("Swap info set for wS to HEDGY");
+
+  // console.log("Setting swap info for HEDGY to wS using Equalizer");
+  // const EQUALIZER_HEDGY_WS = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[HEDGY, WRAPPED_NATIVE, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_HEDGY_WS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_HEDGY_WS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(HEDGY, WRAPPED_NATIVE, EQUALIZER_HEDGY_WS_SWAP_INFO);
+  // console.log("Swap info set for HEDGY to wS");
 
   // console.log("Setting swap info for BEETS to wS using Balancer");
   // const BALANCER_BEETS_WS_PATH = [
