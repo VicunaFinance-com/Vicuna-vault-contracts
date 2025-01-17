@@ -210,6 +210,7 @@ const config: DeploymentConfig = {
       url: process.env.SONIC_RPC || "https://rpc.soniclabs.com",
       chainId: 146,
       accounts,
+      gasMultiplier: 1.1,
     }
   },
   etherscan: {

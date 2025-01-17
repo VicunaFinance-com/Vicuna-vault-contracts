@@ -5,19 +5,19 @@ const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
 
 // Factories
-const BEEFY_REWARD_POOL_FACTORY = "0x0EF66Aad2682c9DfBbCf73ea97752E8d0f4cBCF1";
-const STRATEGY_FACTORY = "0x9Df377a9c4FadFb1f7Bde79B92E31033D06a05A4";
-const STRATEGY_FACTORY_CLM = "0xdC8D3e8C4dA3FA5eE3882b319280cd53f33eE600";
+const BEEFY_REWARD_POOL_FACTORY = "0x725850631793FBDa9B1795142F858aa9d0C7aB28";
+const STRATEGY_FACTORY = "0x41b886582f1b2d99437B24324574135534e1Db7E";
+const STRATEGY_FACTORY_CLM = "0xB5840280Af4b505DCEa2cdB3894B63bBfA2AD4Be";
 
 // Reward Pools
-const BEEFY_REWARD_POOL = "0xDDBfd7D6A6eA35a3e2835dc63067F9e3c250e3C4";
+const BEEFY_REWARD_POOL = "0x3f0d69b71Ff066aFf0b2ca50080150a81e31Bf85";
 
 // Strategies V7
-const STRATEGY_EQUALIZER_FACTORY = "0x88bC83d9Ed84754357cbadB2D0B6CF86304550D0";
-const STRATEGY_BALANCER = "0x054C64b7922b848307315ECF6CA848dcd157713d"
+const STRATEGY_EQUALIZER_FACTORY = "0x30e6C812D1d96f77C34456351Dd0d60a11fa1FCf";
+const STRATEGY_BALANCER = "0x79e310D97E7c299d5EB5f5C37674dD5e4663b05b"
 
 // Strategies CLM
-const STRATEGY_SHADOW_CLM = "0xF1813BB9acA31AF4A935206d255a74A1731a4Bb9"
+const STRATEGY_SHADOW_CLM = "0xa816Aaab1Cf40CaF2c630885B9644608cBF8aE3f"
 
 
 async function main() {
@@ -32,21 +32,21 @@ async function main() {
     const BeefyRewardPoolFactory = await ethers.getContractFactory("BeefyRewardPoolFactory");
     const beefyRewardPoolFactory = BeefyRewardPoolFactory.attach(BEEFY_REWARD_POOL_FACTORY);
 
-    // console.log(`Adding strategy ${VIFI_EQUALIZER_STRATEGY} to StrategyFactory`);
-    // await strategyFactory.addStrategy(VIFI_EQUALIZER_STRATEGY, STRATEGY_EQUALIZER_FACTORY);
-    // console.log(`Added strategy ${VIFI_EQUALIZER_STRATEGY} to StrategyFactory`);
+    console.log(`Adding strategy ${VIFI_EQUALIZER_STRATEGY} to StrategyFactory`);
+    await strategyFactory.addStrategy(VIFI_EQUALIZER_STRATEGY, STRATEGY_EQUALIZER_FACTORY);
+    console.log(`Added strategy ${VIFI_EQUALIZER_STRATEGY} to StrategyFactory`);
 
-    // console.log(`Adding strategy ${VIFI_BALANCER_STRATEGY} to StrategyFactory`);
-    // await strategyFactory.addStrategy(VIFI_BALANCER_STRATEGY, STRATEGY_BALANCER);
-    // console.log(`Added strategy ${VIFI_BALANCER_STRATEGY} to StrategyFactory`);
+    console.log(`Adding strategy ${VIFI_BALANCER_STRATEGY} to StrategyFactory`);
+    await strategyFactory.addStrategy(VIFI_BALANCER_STRATEGY, STRATEGY_BALANCER);
+    console.log(`Added strategy ${VIFI_BALANCER_STRATEGY} to StrategyFactory`);
 
     console.log(`Adding strategy ${VIFI_SHADOW_CLM_STRATEGY} to StrategyFactoryCLM`);
     await strategyFactoryCLM.addStrategy(VIFI_SHADOW_CLM_STRATEGY, STRATEGY_SHADOW_CLM);
     console.log(`Added strategy ${VIFI_SHADOW_CLM_STRATEGY} to StrategyFactoryCLM`);
 
-    // console.log(`Adding reward pool ${VIFI_REWARD_POOL} to BeefyRewardPoolFactory`);
-    // await beefyRewardPoolFactory.addRewardPool(VIFI_REWARD_POOL, BEEFY_REWARD_POOL);
-    // console.log(`Added reward pool ${VIFI_REWARD_POOL} to BeefyRewardPoolFactory`);
+    console.log(`Adding reward pool ${VIFI_REWARD_POOL} to BeefyRewardPoolFactory`);
+    await beefyRewardPoolFactory.addRewardPool(VIFI_REWARD_POOL, BEEFY_REWARD_POOL);
+    console.log(`Added reward pool ${VIFI_REWARD_POOL} to BeefyRewardPoolFactory`);
 }
 
 main()

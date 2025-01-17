@@ -93,12 +93,7 @@ async function main() {
     console.log("BeefyOracle initialized");
 
     console.log("Waiting for chain propagation");
-    for (let i = 0; i < 10; i++) {
-        if (await beefyOracle.owner() === deployer.address) {
-            break;
-        }
-        await new Promise(resolve => setTimeout(resolve, 1000));
-    }
+    await new Promise(resolve => setTimeout(resolve, 10000));
 
     console.log(`Transferring ownership of BeefyOracle to ${KEEPER}`);
     await beefyOracle.transferOwnership(KEEPER);
