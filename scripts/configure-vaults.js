@@ -10,7 +10,8 @@ import {
     VIFI_BALANCER_STRATEGY,
     BEETS,
     BALANCER_VAULT,
-    VIFI_SHADOW_CLM_STRATEGY, VIFI_ICHI_EQUALIZER_STRATEGY
+    VIFI_SHADOW_CLM_STRATEGY,
+    VIFI_ICHI_EQUALIZER_STRATEGY
 } from "./config-sonic";
 
 const hardhat = require("hardhat");
