@@ -1,4 +1,4 @@
-import { BEETS, EQUAL, BEETS_STAKED_SONIC, EQUALIZER_USDC_EQUAL_PAIR, PYTH_CENTRAL_ORACLE, PYTH_USDC_USD_PRICE_FEED, PYTH_WETH_USD_PRICE_FEED, USDC, WAGMI_UNISWAP_V3_USDC_WS_PAIR, WRAPPED_NATIVE, WRAPPER_ETH, EQUALIZER_WS_STS_PAIR, STACKED_SONIC_SYMPHONY, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT } from "./config-sonic";
+import { BEETS, EQUAL, BEETS_STAKED_SONIC, EQUALIZER_USDC_EQUAL_PAIR, PYTH_CENTRAL_ORACLE, PYTH_USDC_USD_PRICE_FEED, PYTH_WETH_USD_PRICE_FEED, USDC, WAGMI_UNISWAP_V3_USDC_WS_PAIR, WRAPPED_NATIVE, WRAPPER_ETH, EQUALIZER_WS_STS_PAIR, STACKED_SONIC_SYMPHONY, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, EQUALIZER_WS_BRUSH_PAIR, EQUALIZER_WS_FSONIC_PAIR, EQUALIZER_WS_GOGLZ_PAIR, EQUALIZER_WS_FIERY_PAIR, EQUALIZER_WS_ECO_PAIR, EQUALIZER_WS_ANON_PAIR, EQUALIZER_WS_HEDGY_PAIR, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY } from "./config-sonic";
 
 const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
@@ -47,6 +47,34 @@ async function main() {
     console.log("Setting Oracle for stS using Equalizer");
     await beefyOracle.setOracle(BEETS_STAKED_SONIC, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, BEETS_STAKED_SONIC], [EQUALIZER_WS_STS_PAIR], [SOLIDLY_TWAP]));
     console.log("Oracle set for stS");
+
+    console.log("Setting Oracle for BRUSH using Equalizer");
+    await beefyOracle.setOracle(BRUSH, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, BRUSH], [EQUALIZER_WS_BRUSH_PAIR], [SOLIDLY_TWAP]));
+    console.log("Oracle set for BRUSH");
+
+    console.log("Setting Oracle for fSONIC using Equalizer");
+    await beefyOracle.setOracle(FSONIC, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, FSONIC], [EQUALIZER_WS_FSONIC_PAIR], [SOLIDLY_TWAP]));
+    console.log("Oracle set for fSONIC");
+
+    console.log("Setting Oracle for GOGLZ using Equalizer");
+    await beefyOracle.setOracle(GOGLZ, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, GOGLZ], [EQUALIZER_WS_GOGLZ_PAIR], [SOLIDLY_TWAP]));
+    console.log("Oracle set for GOGLZ");
+
+    console.log("Setting Oracle for FIERY using Equalizer");
+    await beefyOracle.setOracle(FIERY, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, FIERY], [EQUALIZER_WS_FIERY_PAIR], [SOLIDLY_TWAP]));
+    console.log("Oracle set for FIERY");
+
+    console.log("Setting Oracle for ECO using Equalizer");
+    await beefyOracle.setOracle(ECO, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, ECO], [EQUALIZER_WS_ECO_PAIR], [SOLIDLY_TWAP]));
+    console.log("Oracle set for ECO");
+
+    console.log("Setting Oracle for Anon using Equalizer");
+    await beefyOracle.setOracle(ANON, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, ANON], [EQUALIZER_WS_ANON_PAIR], [SOLIDLY_TWAP]));
+    console.log("Oracle set for Anon");
+
+    console.log("Setting Oracle for HEDGY using Equalizer");
+    await beefyOracle.setOracle(HEDGY, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, HEDGY], [EQUALIZER_WS_HEDGY_PAIR], [SOLIDLY_TWAP]));
+    console.log("Oracle set for HEDGY");
 
     console.log("Setting Oracle for BEETS using Oracle Override");
     await beefyOracle.setOracle(BEETS, BEEFY_ORACLE_OVERRIDE_2, []);
