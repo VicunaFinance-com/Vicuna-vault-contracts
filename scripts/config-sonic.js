@@ -4,6 +4,7 @@ import exp from "constants"
 export const VIFI_EQUALIZER_STRATEGY = "vifi-equalizer-2"
 export const VIFI_BALANCER_STRATEGY = "vifi-balancer-2"
 export const VIFI_SHADOW_CLM_STRATEGY = "vifi-shadow-clm-2"
+export const VIFI_ICHI_EQUALIZER_STRATEGY = "vifi-ichi-equalizer-2"
 export const VIFI_REWARD_POOL = "vifi-reward-pool"
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 export const UINT256_MAX = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
