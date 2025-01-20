@@ -40,15 +40,15 @@ async function main() {
     // await verify(beefyVaultConcLiq.address, []);
     // console.log("Verified BeefyVaultConcLiq");
 
-    // console.log("Deploying BeefyVaultConcLiqFactory");
-    // const BeefyVaultConcLiqFactory = await ethers.getContractFactory("BeefyVaultConcLiqFactory");
-    // const beefyVaultConcLiqFactory = await BeefyVaultConcLiqFactory.deploy(beefyVaultConcLiq.address, { gasLimit: 350000 });
-    // await beefyVaultConcLiqFactory.deployed();
-    // console.log(`BeefyVaultConcLiqFactory deployed to ${beefyVaultConcLiqFactory.address}`);
+    console.log("Deploying BeefyVaultConcLiqFactory");
+    const BeefyVaultConcLiqFactory = await ethers.getContractFactory("BeefyVaultConcLiqFactory");
+    const beefyVaultConcLiqFactory = await BeefyVaultConcLiqFactory.deploy("0x603b554D3980e459A72C4729dECCDcac6ced6553", { gasLimit: 400000 });
+    await beefyVaultConcLiqFactory.deployed();
+    console.log(`BeefyVaultConcLiqFactory deployed to ${beefyVaultConcLiqFactory.address}`);
 
-    // console.log("Verifying BeefyVaultConcLiqFactory");
-    // await verify(beefyVaultConcLiqFactory.address, [beefyVaultConcLiq.address]);
-    // console.log("Verified BeefyVaultConcLiqFactory");
+    console.log("Verifying BeefyVaultConcLiqFactory");
+    await verify(beefyVaultConcLiqFactory.address, ["0x603b554D3980e459A72C4729dECCDcac6ced6553"]);
+    console.log("Verified BeefyVaultConcLiqFactory");
 
     // console.log("Deploying StrategyFactory");
     // const StrategyFactory = await ethers.getContractFactory("StrategyFactory");
@@ -70,25 +70,25 @@ async function main() {
     // await verify(strategyFactoryCLM.address, [WRAPPED_NATIVE, KEEPER, FEE_RECIPIENT, FEE_CONFIGURATOR]);
     // console.log("Verified StrategyFactoryCLM");
 
-    console.log("Deploying BeefyRewardPool");
-    const BeefyRewardPool= await ethers.getContractFactory("BeefyRewardPool");
-    const beefyRewardPool = await BeefyRewardPool.deploy();
-    await beefyRewardPool.deployed();
-    console.log(`BeefyRewardPool deployed to ${beefyRewardPool.address}`);
+    // console.log("Deploying BeefyRewardPool");
+    // const BeefyRewardPool= await ethers.getContractFactory("BeefyRewardPool");
+    // const beefyRewardPool = await BeefyRewardPool.deploy();
+    // await beefyRewardPool.deployed();
+    // console.log(`BeefyRewardPool deployed to ${beefyRewardPool.address}`);
 
-    console.log("Verifying BeefyRewardPool");
-    await verify(beefyRewardPool.address, []);
-    console.log("Verified BeefyRewardPool");
+    // console.log("Verifying BeefyRewardPool");
+    // await verify(beefyRewardPool.address, []);
+    // console.log("Verified BeefyRewardPool");
     
-    console.log("Deploying BeefyRewardPoolFactory");
-    const BeefyRewardPoolFactory = await ethers.getContractFactory("BeefyRewardPoolFactory");
-    const beefyRewardPoolFactory = await BeefyRewardPoolFactory.deploy(KEEPER);
-    await beefyRewardPoolFactory.deployed();
-    console.log(`BeefyRewardPoolFactory deployed to ${beefyRewardPoolFactory.address}`);
+    // console.log("Deploying BeefyRewardPoolFactory");
+    // const BeefyRewardPoolFactory = await ethers.getContractFactory("BeefyRewardPoolFactory");
+    // const beefyRewardPoolFactory = await BeefyRewardPoolFactory.deploy(KEEPER);
+    // await beefyRewardPoolFactory.deployed();
+    // console.log(`BeefyRewardPoolFactory deployed to ${beefyRewardPoolFactory.address}`);
 
-    console.log("Verifying BeefyRewardPoolFactory");
-    await verify(beefyRewardPoolFactory.address, [KEEPER]);
-    console.log("Verified BeefyRewardPoolFactory");
+    // console.log("Verifying BeefyRewardPoolFactory");
+    // await verify(beefyRewardPoolFactory.address, [KEEPER]);
+    // console.log("Verified BeefyRewardPoolFactory");
 
     // console.log("Wating for block confirmations");
     // await new Promise(resolve => setTimeout(resolve, 30000));
@@ -144,11 +144,12 @@ async function main() {
 
     console.log("Factories deployment completed");
     // console.log(`BeefyVaultV7Factory: ${beefyVaultV7Factory.address}`);
-    // console.log(`BeefyVaultConcLiqFactory: ${beefyVaultConcLiqFactory.address}`);
+    console.log(`BeefyVaultConcLiqFactory: ${beefyVaultConcLiqFactory.address}`);
+    // console.log(`BeefyVaultConcLiq: ${beefyVaultConcLiq.address}`);
     // console.log(`StrategyFactory: ${strategyFactory.address}`);
     // console.log(`StrategyFactoryCLM: ${strategyFactoryCLM.address}`);
-    console.log(`BeefyRewardPool: ${beefyRewardPool.address}`);
-    console.log(`BeefyRewardPoolFactory: ${beefyRewardPoolFactory.address}`);
+    // console.log(`BeefyRewardPool: ${beefyRewardPool.address}`);
+    // console.log(`BeefyRewardPoolFactory: ${beefyRewardPoolFactory.address}`);
 }
 
 main()
