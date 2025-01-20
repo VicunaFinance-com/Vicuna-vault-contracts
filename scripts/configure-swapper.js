@@ -1,6 +1,6 @@
 import VelodromeRouterAbi from "../data/abi/VelodromeRouter.json";
 import BalancerVaultAbi from "../data/abi/BalancerVault.json";
-import { BEETS, EQUAL, EQUALIZER_ROUTER_O2, UINT256_MAX, USDC, WRAPPED_NATIVE, WRAPPER_ETH, BALANCER_VAULT, BEETS_STAKED_SONIC, INT256_MAX, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, STACKED_SONIC_SYMPHONY, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY } from "./config-sonic";
+import { BEETS, EQUAL, EQUALIZER_ROUTER_O2, UINT256_MAX, USDC, WRAPPED_NATIVE, WRAPPER_ETH, BALANCER_VAULT, BEETS_STAKED_SONIC, INT256_MAX, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, STACKED_SONIC_SYMPHONY, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, WHALE, THC } from "./config-sonic";
 
 const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
@@ -138,6 +138,30 @@ async function main() {
   // const EQUALIZER_HEDGY_WS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_HEDGY_WS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
   // await beefySwapper.setSwapInfo(HEDGY, WRAPPED_NATIVE, EQUALIZER_HEDGY_WS_SWAP_INFO);
   // console.log("Swap info set for HEDGY to wS");
+
+  // console.log("Setting swap info for wS to WHALE using Equalizer");
+  // const EQUALIZER_WS_WHALE = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, WHALE, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_WS_WHALE_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_WHALE.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, WHALE, EQUALIZER_WS_WHALE_SWAP_INFO);
+  // console.log("Swap info set for wS to WHALE");
+
+  // console.log("Setting swap info for WHALE to wS using Equalizer");
+  // const EQUALIZER_WHALE_WS = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WHALE, WRAPPED_NATIVE, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_WHALE_WS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WHALE_WS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WHALE, WRAPPED_NATIVE, EQUALIZER_WHALE_WS_SWAP_INFO);
+  // console.log("Swap info set for WHALE to wS");
+
+  // console.log("Setting swap info for wS to THC using Equalizer");
+  // const EQUALIZER_WS_THC = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, THC, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_WS_THC_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_THC.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, THC, EQUALIZER_WS_THC_SWAP_INFO);
+  // console.log("Swap info set for wS to THC");
+
+  // console.log("Setting swap info for THC to wS using Equalizer");
+  // const EQUALIZER_THC_WS = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[THC, WRAPPED_NATIVE, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_THC_WS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_THC_WS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(THC, WRAPPED_NATIVE, EQUALIZER_THC_WS_SWAP_INFO);
+  // console.log("Swap info set for THC to wS");
 
   // console.log("Setting swap info for BEETS to wS using Balancer");
   // const BALANCER_BEETS_WS_PATH = [
