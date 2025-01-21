@@ -172,7 +172,7 @@ async function deploySwapxVault(name, symbol, want, gauge) {
     }
 
     console.log("Initializing Swapx strategy");
-    await strategy.initialize(gauge, SWAPX_ROUTER_O2, [SWPX], addresses);
+    await strategy.initialize(gauge, false, [SWPX], addresses);
     console.log("Initialized Swapx strategy");
 
     console.log("Initializing Swapx vault");
