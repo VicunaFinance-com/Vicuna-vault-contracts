@@ -3,10 +3,13 @@
 import {
     VIFI_REWARD_POOL,
     EQUALIZER_ROUTER_O2, 
+    SWAPX_ROUTER_O2,
     STRATEGIST, 
     ZERO_ADDRESS, 
     VIFI_EQUALIZER_STRATEGY, 
+    VIFI_ICHI_SWAPX_STRATEGY,
     EQUAL, 
+    SWPX,
     VIFI_BALANCER_STRATEGY, 
     BEETS, 
     BALANCER_VAULT, 
@@ -146,6 +149,39 @@ async function deployEqualizerVault(name, symbol, want, gauge) {
     console.log(`Equalizer vault for ${name} symbol: ${symbol} deployed`);
     console.log(`Equalizer vault: ${vault.address}`);
     console.log(`Equalizer strategy: ${strategy.address}`);
+}
+
+async function deploySwapxVault(name, symbol, want, gauge) {
+    const VaultV7Factory = await ethers.getContractFactory("BeefyVaultV7Factory");
+    const vaultV7Factory = VaultV7Factory.attach(VAULT_V7_FACTORY);
+    const BeefyVaultV7 = await ethers.getContractFactory("BeefyVaultV7");
+    const vault = BeefyVaultV7.attach(await clone(() => vaultV7Factory.cloneVault()));
+
+    const StrategyFactory = await ethers.getContractFactory("StrategyFactory");
+    const strategyFactory = StrategyFactory.attach(STRATEGY_FACTORY);
+    const StrategyIchiSwapxFactory = await ethers.getContractFactory("StrategyIchi");
+    const strategy = StrategyIchiSwapxFactory.attach(await clone(() => strategyFactory.createStrategy(VIFI_ICHI_SWAPX_STRATEGY)));
+
+    const addresses = {
+        strategist: STRATEGIST,
+        factory: STRATEGY_FACTORY,
+        swapper: BEEFY_SWAPPER,
+        depositToken: ZERO_ADDRESS,
+        vault: vault.address,
+        want: want
+    }
+
+    console.log("Initializing Swapx strategy");
+    await strategy.initialize(gauge, SWAPX_ROUTER_O2, [SWPX], addresses);
+    console.log("Initialized Swapx strategy");
+
+    console.log("Initializing Swapx vault");
+    await vault.initialize(strategy.address, name, symbol, VAULT_X);
+    console.log("Initialized Swapx vault");
+
+    console.log(`Swapx vault for ${name} symbol: ${symbol} deployed`);
+    console.log(`Swapx vault: ${vault.address}`);
+    console.log(`Swapx strategy: ${strategy.address}`);
 }
 
 async function deployBalancerVault(name, symbol, want, gauge, booster, balancerVault) {
