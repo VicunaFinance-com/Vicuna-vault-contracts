@@ -11,7 +11,11 @@ import {
     BEETS,
     BALANCER_VAULT,
     VIFI_SHADOW_CLM_STRATEGY,
-    VIFI_ICHI_EQUALIZER_STRATEGY
+    VIFI_ICHI_EQUALIZER_STRATEGY,
+    KEEPER,
+    FEE_RECIPIENT,
+    FEE_CONFIGURATOR,
+    WRAPPED_NATIVE
 } from "./config-sonic";
 
 const hardhat = require("hardhat");
@@ -94,11 +98,25 @@ async function deployIchiEqualizerVault(name, symbol, want, gauge, ichiDepositHe
     const vault = BeefyVaultV7.attach(await clone(() => vaultV7Factory.cloneVault()));
     const StrategyFactory = await ethers.getContractFactory("StrategyFactory");
     const strategyFactory = StrategyFactory.attach(STRATEGY_FACTORY);
-    const StrategyEqualizerIchi = await ethers.getContractFactory("StrategyEqualizerFactory");
+    const StrategyEqualizerIchi = await ethers.getContractFactory("StrategyEqualizerIchi");
     const strategy = StrategyEqualizerIchi.attach(await clone(() => strategyFactory.createStrategy(VIFI_ICHI_EQUALIZER_STRATEGY)));
 
     console.log("Initializing ICHI Equalizer strategy");
-    await strategy.initialize(want, gauge, ichiDepositHelper, vaultDeployer);
+
+    const addresses = {
+        vault: vault.address,
+        unirouter: EQUALIZER_ROUTER_O2,
+        keeper: KEEPER,
+        strategist: STRATEGIST,
+        beefyFeeRecipient: FEE_RECIPIENT,
+        beefyFeeConfig: FEE_CONFIGURATOR
+    }
+
+    const nativeToDepositRoute = [{from: WRAPPED_NATIVE, to: WRAPPED_NATIVE, stable: false}];
+    const outputToNativeRoute = [{from: EQUAL, to: WRAPPED_NATIVE, stable: false}];
+
+    await strategy.initialize(want, gauge, ichiDepositHelper, vaultDeployer,
+        outputToNativeRoute, nativeToDepositRoute, addresses);
     console.log("Initialized ICHI Equalizer strategy");
 
     console.log("Initializing ICHI Equalizer vault");
