@@ -1,4 +1,4 @@
-import { BEETS, EQUAL, BEETS_STAKED_SONIC, EQUALIZER_USDC_EQUAL_PAIR, PYTH_CENTRAL_ORACLE, PYTH_USDC_USD_PRICE_FEED, PYTH_WETH_USD_PRICE_FEED, USDC, WAGMI_UNISWAP_V3_USDC_WS_PAIR, WRAPPED_NATIVE, WRAPPER_ETH, EQUALIZER_WS_STS_PAIR, STACKED_SONIC_SYMPHONY, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, EQUALIZER_WS_BRUSH_PAIR, EQUALIZER_WS_FSONIC_PAIR, EQUALIZER_WS_GOGLZ_PAIR, EQUALIZER_WS_FIERY_PAIR, EQUALIZER_WS_ECO_PAIR, EQUALIZER_WS_ANON_PAIR, EQUALIZER_WS_HEDGY_PAIR, EQUALIZER_WS_WHALE_PAIR, EQUALIZER_WS_THC_PAIR, ICHI_USDC_SCUSD_PAIR, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, THC, WHALE, SONIC_USD } from "./config-sonic";
+import { BEETS, EQUAL, BEETS_STAKED_SONIC, EQUALIZER_USDC_EQUAL_PAIR, PYTH_CENTRAL_ORACLE, PYTH_USDC_USD_PRICE_FEED, PYTH_WETH_USD_PRICE_FEED, USDC, WAGMI_UNISWAP_V3_USDC_WS_PAIR, WRAPPED_NATIVE, WRAPPER_ETH, EQUALIZER_WS_STS_PAIR, STACKED_SONIC_SYMPHONY, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, EQUALIZER_WS_BRUSH_PAIR, EQUALIZER_WS_FSONIC_PAIR, EQUALIZER_WS_GOGLZ_PAIR, EQUALIZER_WS_FIERY_PAIR, EQUALIZER_WS_ECO_PAIR, EQUALIZER_WS_ANON_PAIR, EQUALIZER_WS_HEDGY_PAIR, EQUALIZER_WS_WHALE_PAIR, EQUALIZER_WS_THC_PAIR, ICHI_USDC_SCUSD_PAIR, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, THC, WHALE, SWPX, ATOLL, SONIC_ETH, ATOLL_ETH, SONIC_USD, SACRA } from "./config-sonic";
 
 const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
@@ -85,9 +85,45 @@ async function main() {
     // await beefyOracle.setOracle(THC, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, THC], [EQUALIZER_WS_THC_PAIR], [SOLIDLY_TWAP]));
     // console.log("Oracle set for THC");
 
-    console.log("Setting Oracle for scUSD using SwapX");
-    await beefyOracle.setOracle(SONIC_USD, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([USDC, SONIC_USD], [ICHI_USDC_SCUSD_PAIR], [SOLIDLY_TWAP]));
-    console.log("Oracle set for scUSD");
+    // console.log("Setting Oracle for SWPX using Oracle Override");
+    // await beefyOracle.setOracle(SWPX, BEEFY_ORACLE_OVERRIDE, []);
+    // console.log("Oracle set for SWPX");
+    
+    // console.log("Setting Oracle for USDC using Oracle Override");
+    // await beefyOracle.setOracle(USDC, BEEFY_ORACLE_OVERRIDE, []);
+    // console.log("Oracle set for USDC");
+
+    // console.log("Setting Oracle for wS using Oracle Override");
+    // await beefyOracle.setOracle(WRAPPED_NATIVE, BEEFY_ORACLE_OVERRIDE, []);
+    // console.log("Oracle set for wS");
+
+    // console.log("Setting Oracle for ATETH using Oracle Override");
+    // await beefyOracle.setOracle(ATOLL_ETH, BEEFY_ORACLE_OVERRIDE, []);
+    // console.log("Oracle set for ATETH");
+
+    // console.log("Setting Oracle for WETH using Oracle Override");
+    // await beefyOracle.setOracle(WRAPPER_ETH, BEEFY_ORACLE_OVERRIDE, []);
+    // console.log("Oracle set for WETH");
+
+    // console.log("Setting Oracle for SCETH using Oracle Override");
+    // await beefyOracle.setOracle(SONIC_ETH, BEEFY_ORACLE_OVERRIDE, []);
+    // console.log("Oracle set for SCETH");
+
+    // console.log("Setting Oracle for ATOLL using Oracle Override");
+    // await beefyOracle.setOracle(ATOLL, BEEFY_ORACLE_OVERRIDE, []);
+    // console.log("Oracle set for ATOLL");
+
+    // console.log("Setting Oracle for SACRA using Oracle Override");
+    // await beefyOracle.setOracle(SACRA, BEEFY_ORACLE_OVERRIDE, []);
+    // console.log("Oracle set for SACRA");
+
+    // console.log("Setting Oracle for stS using Oracle Override");
+    // await beefyOracle.setOracle(BEETS_STAKED_SONIC, BEEFY_ORACLE_OVERRIDE, []);
+    // console.log("Oracle set for stS");
+
+    // console.log("Setting Oracle for SCUSD using Oracle Override");
+    // await beefyOracle.setOracle(SONIC_USD, BEEFY_ORACLE_OVERRIDE, []);
+    // console.log("Oracle set for SCUSD");
 
     // console.log("Setting Oracle for BEETS using Oracle Override");
     // await beefyOracle.setOracle(BEETS, BEEFY_ORACLE_OVERRIDE_2, []);
