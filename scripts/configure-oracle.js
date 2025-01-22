@@ -1,4 +1,4 @@
-import { BEETS, EQUAL, BEETS_STAKED_SONIC, EQUALIZER_USDC_EQUAL_PAIR, PYTH_CENTRAL_ORACLE, PYTH_USDC_USD_PRICE_FEED, PYTH_WETH_USD_PRICE_FEED, USDC, WAGMI_UNISWAP_V3_USDC_WS_PAIR, WRAPPED_NATIVE, WRAPPER_ETH, EQUALIZER_WS_STS_PAIR, STACKED_SONIC_SYMPHONY, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, EQUALIZER_WS_BRUSH_PAIR, EQUALIZER_WS_FSONIC_PAIR, EQUALIZER_WS_GOGLZ_PAIR, EQUALIZER_WS_FIERY_PAIR, EQUALIZER_WS_ECO_PAIR, EQUALIZER_WS_ANON_PAIR, EQUALIZER_WS_HEDGY_PAIR, EQUALIZER_WS_WHALE_PAIR, EQUALIZER_WS_THC_PAIR, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, THC, WHALE } from "./config-sonic";
+import { BEETS, EQUAL, BEETS_STAKED_SONIC, EQUALIZER_USDC_EQUAL_PAIR, PYTH_CENTRAL_ORACLE, PYTH_USDC_USD_PRICE_FEED, PYTH_WETH_USD_PRICE_FEED, USDC, WAGMI_UNISWAP_V3_USDC_WS_PAIR, WRAPPED_NATIVE, WRAPPER_ETH, EQUALIZER_WS_STS_PAIR, STACKED_SONIC_SYMPHONY, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, EQUALIZER_WS_BRUSH_PAIR, EQUALIZER_WS_FSONIC_PAIR, EQUALIZER_WS_GOGLZ_PAIR, EQUALIZER_WS_FIERY_PAIR, EQUALIZER_WS_ECO_PAIR, EQUALIZER_WS_ANON_PAIR, EQUALIZER_WS_HEDGY_PAIR, EQUALIZER_WS_WHALE_PAIR, EQUALIZER_WS_THC_PAIR, ICHI_USDC_SCUSD_PAIR, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, THC, WHALE, SONIC_USD } from "./config-sonic";
 
 const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
@@ -85,6 +85,10 @@ async function main() {
     // await beefyOracle.setOracle(THC, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([WRAPPED_NATIVE, THC], [EQUALIZER_WS_THC_PAIR], [SOLIDLY_TWAP]));
     // console.log("Oracle set for THC");
 
+    console.log("Setting Oracle for scUSD using SwapX");
+    await beefyOracle.setOracle(SONIC_USD, BEEFY_SOLIDLY_ORACLE, uniswapV3CallData([USDC, SONIC_USD], [ICHI_USDC_SCUSD_PAIR], [SOLIDLY_TWAP]));
+    console.log("Oracle set for scUSD");
+
     // console.log("Setting Oracle for BEETS using Oracle Override");
     // await beefyOracle.setOracle(BEETS, BEEFY_ORACLE_OVERRIDE_2, []);
     // console.log("Oracle set for BEETS");
@@ -97,9 +101,9 @@ async function main() {
     // await beefyOracle.setOracle(RINGING_STABLE_BEETS, BEEFY_ORACLE_OVERRIDE, []);
     // console.log("Oracle set for Ringing Stable Beets");
 
-    console.log("Setting Oracle for Put A Ring On It using Oracle Override");
-    await beefyOracle.setOracle(PUT_A_RING_ON_IT, BEEFY_ORACLE_OVERRIDE, []);
-    console.log("Oracle set for Put A Ring On It");
+    // console.log("Setting Oracle for Put A Ring On It using Oracle Override");
+    // await beefyOracle.setOracle(PUT_A_RING_ON_IT, BEEFY_ORACLE_OVERRIDE, []);
+    // console.log("Oracle set for Put A Ring On It");
 }
 
 function uniswapV3CallData(tokens, pairs, twaps) {

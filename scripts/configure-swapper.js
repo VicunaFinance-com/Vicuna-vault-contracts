@@ -1,6 +1,6 @@
 import VelodromeRouterAbi from "../data/abi/VelodromeRouter.json";
 import BalancerVaultAbi from "../data/abi/BalancerVault.json";
-import { BEETS, EQUAL, EQUALIZER_ROUTER_O2, UINT256_MAX, USDC, WRAPPED_NATIVE, WRAPPER_ETH, BALANCER_VAULT, BEETS_STAKED_SONIC, INT256_MAX, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, STACKED_SONIC_SYMPHONY, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, WHALE, THC } from "./config-sonic";
+import { BEETS, EQUAL, EQUALIZER_ROUTER_O2, UINT256_MAX, USDC, WRAPPED_NATIVE, WRAPPER_ETH, BALANCER_VAULT, BEETS_STAKED_SONIC, INT256_MAX, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, STACKED_SONIC_SYMPHONY, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, WHALE, THC, SONIC_USD } from "./config-sonic";
 
 const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
@@ -162,6 +162,18 @@ async function main() {
   // const EQUALIZER_THC_WS_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_THC_WS.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
   // await beefySwapper.setSwapInfo(THC, WRAPPED_NATIVE, EQUALIZER_THC_WS_SWAP_INFO);
   // console.log("Swap info set for THC to wS");
+
+  console.log("Setting swap info for USDC to scUSD using SwapX");
+  const SWAPX_USDC_SCUSD = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[USDC, SONIC_USD, false]], BEEFY_SWAPPER, UINT256_MAX);
+  const SWAPX_USDC_SCUSD_SWAP_INFO = [EQUALIZER_ROUTER_O2, SWAPX_USDC_SCUSD.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  await beefySwapper.setSwapInfo(USDC, SONIC_USD, SWAPX_USDC_SCUSD_SWAP_INFO);
+  console.log("Swap info set for USDC to scUSD");
+
+  console.log("Setting swap info for scUSD to USDC using SwapX");
+  const SWAPX_SCUSD_USDC = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[THC, WRAPPED_NATIVE, false]], BEEFY_SWAPPER, UINT256_MAX);
+  const SWAPX_SCUSD_USDC_SWAP_INFO = [EQUALIZER_ROUTER_O2, SWAPX_SCUSD_USDC.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  await beefySwapper.setSwapInfo(SONIC_USD, USDC, SWAPX_SCUSD_USDC_SWAP_INFO);
+  console.log("Swap info set for scUSD to USDC");
 
   // console.log("Setting swap info for BEETS to wS using Balancer");
   // const BALANCER_BEETS_WS_PATH = [
