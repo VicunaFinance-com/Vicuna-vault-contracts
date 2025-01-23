@@ -1,7 +1,7 @@
 import VelodromeRouterAbi from "../data/abi/VelodromeRouter.json";
 import BalancerVaultAbi from "../data/abi/BalancerVault.json";
 import AlgebraRouterAbi from "../data/abi/AlgebraRouterAbi.json";
-import { BEETS, EQUAL, EQUALIZER_ROUTER_O2, ALBEGRA_ROUTER, SWAPX_ROUTER_V2, UINT256_MAX, USDC, WRAPPED_NATIVE, WRAPPER_ETH, BALANCER_VAULT, BEETS_STAKED_SONIC, INT256_MAX, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, STACKED_SONIC_SYMPHONY, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, WHALE, THC, SWPX, SACRA, ATOLL, ATOLL_ETH, SONIC_ETH, SONIC_USD } from "./config-sonic";
+import { BEETS, EQUAL, EQUALIZER_ROUTER_O2, ALGEBRA_ROUTER, SWAPX_ROUTER_V2, UINT256_MAX, USDC, WRAPPED_NATIVE, WRAPPER_ETH, BALANCER_VAULT, BEETS_STAKED_SONIC, INT256_MAX, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, STACKED_SONIC_SYMPHONY, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, WHALE, THC, SWPX, SACRA, ATOLL, ATOLL_ETH, SONIC_ETH, SONIC_USD } from "./config-sonic";
 
 const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
@@ -415,7 +415,7 @@ async function balancer(path) {
 };
 
 async function algebraSingle(path) {
-  const router = await ethers.getContractAt(AlgebraRouterAbi, ALBEGRA_ROUTER);
+  const router = await ethers.getContractAt(AlgebraRouterAbi, ALGEBRA_ROUTER);
 
   const [tokenIn, tokenOut] = path;
   
@@ -423,6 +423,7 @@ async function algebraSingle(path) {
     tokenIn,
     tokenOut,
     BEEFY_SWAPPER,
+    UINT256_MAX,
     0,
     0,
     0
@@ -434,7 +435,7 @@ async function algebraSingle(path) {
   const minAmountSign = 0;
 
   const swapInfo = [
-    ALBEGRA_ROUTER,
+    ALGEBRA_ROUTER,
     txData.data,
     amountIndex,
     minIndex,
