@@ -1,7 +1,7 @@
 import VelodromeRouterAbi from "../data/abi/VelodromeRouter.json";
 import BalancerVaultAbi from "../data/abi/BalancerVault.json";
 import AlgebraRouterAbi from "../data/abi/AlgebraSwapxRouterAbi.json";
-import { BEETS, EQUAL, EQUALIZER_ROUTER_O2, ALGEBRA_ROUTER, SWAPX_ROUTER_V2, UINT256_MAX, USDC, WRAPPED_NATIVE, WRAPPER_ETH, BALANCER_VAULT, BEETS_STAKED_SONIC, INT256_MAX, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, STACKED_SONIC_SYMPHONY, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, WHALE, THC, SWPX, SACRA, ATOLL, ATOLL_ETH, SONIC_ETH, SONIC_USD } from "./config-sonic";
+import { BEETS, EQUAL, EQUALIZER_ROUTER_O2, ALGEBRA_ROUTER, SWAPX_ROUTER_V2, UINT256_MAX, USDC, WRAPPED_NATIVE, WRAPPER_ETH, BALANCER_VAULT, BEETS_STAKED_SONIC, INT256_MAX, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, STACKED_SONIC_SYMPHONY, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, WHALE, THC, SWPX, SACRA, ATOLL, ATOLL_ETH, SONIC_ETH, SONIC_USD, ORIGIN_SONIC } from "./config-sonic";
 
 const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
@@ -164,11 +164,11 @@ async function main() {
   // await beefySwapper.setSwapInfo(THC, WRAPPED_NATIVE, EQUALIZER_THC_WS_SWAP_INFO);
   // console.log("Swap info set for THC to wS");
 
-  // console.log("Setting swap info for wS to SWPX using SwapX");
-  // const SWAPX_WS_SWPX_PATH = [WRAPPED_NATIVE, SWPX];
-  // const SWAPX_WS_SWPX_SWAP_INFO = await algebraSingle(SWAPX_WS_SWPX_PATH);
-  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, SWPX, SWAPX_WS_SWPX_SWAP_INFO);
-  // console.log("Swap info set for wS to SWPX");
+  // console.log("Setting swap info for wS to scUSD using Equalizer");
+  // const EQUALIZER_WS_SCUSD = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, SONIC_USD, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_WS_SCUSD_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_SCUSD.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, SONIC_USD, EQUALIZER_WS_SCUSD_SWAP_INFO);
+  // console.log("Swap info set for THC to wS");
 
   // console.log("Setting swap info for SWPX to wS using SwapX");
   // const SWAPX_SWPX_WS_PATH = [SWPX, WRAPPED_NATIVE];
@@ -176,137 +176,23 @@ async function main() {
   // await beefySwapper.setSwapInfo(SWPX, WRAPPED_NATIVE, SWAPX_SWPX_WS_SWAP_INFO);
   // console.log("Swap info set for SWPX to wS");
 
-  // console.log("Setting swap info for wS to USDC using SwapX");
-  // const SWAPX_WS_USDC_PATH = [WRAPPED_NATIVE, USDC];
-  // const SWAPX_WS_USDC_SWAP_INFO = await algebraSingle(SWAPX_WS_USDC_PATH);
-  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, USDC, SWAPX_WS_USDC_SWAP_INFO);
-  // console.log("Swap info set for wS to USDC");
-
-  // console.log("Setting swap info for USDC to wS using SwapX");
-  // const SWAPX_USDC_WS_PATH = [USDC, WRAPPED_NATIVE];
-  // const SWAPX_USDC_WS_SWAP_INFO = await algebraSingle(SWAPX_USDC_WS_PATH);
-  // await beefySwapper.setSwapInfo(USDC, WRAPPED_NATIVE, SWAPX_USDC_WS_SWAP_INFO);
-  // console.log("Swap info set for USDC to wS");
-
-  // console.log("Setting swap info for stS to USDC using SwapX");
-  // const SWAPX_STS_USDC_PATH = [BEETS_STAKED_SONIC, USDC];
-  // const SWAPX_STS_USDC_SWAP_INFO = await algebraSingle(SWAPX_STS_USDC_PATH);
-  // await beefySwapper.setSwapInfo(BEETS_STAKED_SONIC, USDC, SWAPX_STS_USDC_SWAP_INFO);
-  // console.log("Swap info set for stS to USDC");
-
-  // console.log("Setting swap info for USDC to stS using SwapX");
-  // const SWAPX_USDC_STS_PATH = [USDC, BEETS_STAKED_SONIC];
-  // const SWAPX_USDC_STS_SWAP_INFO = await algebraSingle(SWAPX_USDC_STS_PATH);
-  // await beefySwapper.setSwapInfo(USDC, BEETS_STAKED_SONIC, SWAPX_USDC_STS_SWAP_INFO);
-  // console.log("Swap info set for USDC to stS");
-
-  // console.log("Setting swap info for SACRA to wS using SwapX");
-  // const SWAPX_SACRA_WS_PATH = [SACRA, WRAPPED_NATIVE];
-  // const SWAPX_SACRA_WS_SWAP_INFO = await algebraSingle(SWAPX_SACRA_WS_PATH);
-  // await beefySwapper.setSwapInfo(SACRA, WRAPPED_NATIVE, SWAPX_SACRA_WS_SWAP_INFO);
-  // console.log("Swap info set for SACRA to wS");
-
   // console.log("Setting swap info for wS to SACRA using SwapX");
   // const SWAPX_WS_SACRA_PATH = [WRAPPED_NATIVE, SACRA];
   // const SWAPX_WS_SACRA_SWAP_INFO = await algebraSingle(SWAPX_WS_SACRA_PATH);
   // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, SACRA, SWAPX_WS_SACRA_SWAP_INFO);
   // console.log("Swap info set for wS to SACRA");
 
-  // console.log("Setting swap info for USDC to SWPX using SwapX");
-  // const SWAPX_USDC_SWPX_PATH = [USDC, SWPX];
-  // const SWAPX_USDC_SWPX_SWAP_INFO = await algebraSingle(SWAPX_USDC_SWPX_PATH);
-  // await beefySwapper.setSwapInfo(USDC, SWPX, SWAPX_USDC_SWPX_SWAP_INFO);
-  // console.log("Swap info set for USDC to SWPX");
+  // console.log("Setting swap info for wS to atETH using SwapX");
+  // const SWAPX_WS_ATETH_PATH = [WRAPPED_NATIVE, ATOLL_ETH];
+  // const SWAPX_WS_ATETH_SWAP_INFO = await algebraSingle(SWAPX_WS_ATETH_PATH);
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, ATOLL_ETH, SWAPX_WS_ATETH_SWAP_INFO);
+  // console.log("Swap info set for wS to atETH");
 
-  // console.log("Setting swap info for SWPX to USDC using SwapX");
-  // const SWAPX_SWPX_USDC_PATH = [SWPX, USDC];
-  // const SWAPX_SWPX_USDC_SWAP_INFO = await algebraSingle(SWAPX_SWPX_USDC_PATH);
-  // await beefySwapper.setSwapInfo(SWPX, USDC, SWAPX_SWPX_USDC_SWAP_INFO);
-  // console.log("Swap info set for SWPX to USDC");
-
-  // console.log("Setting swap info for ATOLL to ATETH using SwapX");
-  // const SWAPX_ATOLL_ATETH_PATH = [ATOLL, ATOLL_ETH];
-  // const SWAPX_ATOLL_ATETH_SWAP_INFO = await algebraSingle(SWAPX_ATOLL_ATETH_PATH);
-  // await beefySwapper.setSwapInfo(ATOLL, ATOLL_ETH, SWAPX_ATOLL_ATETH_SWAP_INFO);
-  // console.log("Swap info set for USDC to scUSD");
-
-  // console.log("Setting swap info for ATETH to ATOLL using SwapX");
-  // const SWAPX_ATETH_ATOLL_PATH = [ATOLL_ETH, ATOLL];
-  // const SWAPX_ATETH_ATOLL_SWAP_INFO = await algebraSingle(SWAPX_ATETH_ATOLL_PATH);
-  // await beefySwapper.setSwapInfo(ATOLL_ETH, ATOLL, SWAPX_ATETH_ATOLL_SWAP_INFO);
-  // console.log("Swap info set for ATETH to ATOLL");
-
-  // console.log("Setting swap info for USDC to WETH using SwapX");
-  // const SWAPX_USDC_WETH_PATH = [USDC, WRAPPER_ETH];
-  // const SWAPX_USDC_WETH_SWAP_INFO = await algebraSingle(SWAPX_USDC_WETH_PATH);
-  // await beefySwapper.setSwapInfo(USDC, WRAPPER_ETH, SWAPX_USDC_WETH_SWAP_INFO);
-  // console.log("Swap info set for USDC to WETH");
-
-  // console.log("Setting swap info for WETH to USDC using SwapX");
-  // const SWAPX_WETH_USDC_PATH = [WRAPPER_ETH, USDC];
-  // const SWAPX_WETH_USDC_SWAP_INFO = await algebraSingle(SWAPX_WETH_USDC_PATH);
-  // await beefySwapper.setSwapInfo(WRAPPER_ETH, USDC, SWAPX_WETH_USDC_SWAP_INFO);
-  // console.log("Swap info set for WETH to USDC");
-
-  // console.log("Setting swap info for WETH to USDC using SwapX");
-  // const SWAPX_WETH_USDC_PATH = [WRAPPER_ETH, USDC];
-  // const SWAPX_WETH_USDC_SWAP_INFO = await algebraSingle(SWAPX_WETH_USDC_PATH);
-  // await beefySwapper.setSwapInfo(WRAPPER_ETH, USDC, SWAPX_WETH_USDC_SWAP_INFO);
-  // console.log("Swap info set for WETH to USDC");
-
-  // console.log("Setting swap info for USDC to WETH using SwapX");
-  // const SWAPX_USDC_WETH_PATH = [USDC, WRAPPER_ETH];
-  // const SWAPX_USDC_WETH_SWAP_INFO = await algebraSingle(SWAPX_USDC_WETH_PATH);
-  // await beefySwapper.setSwapInfo(USDC, WRAPPER_ETH, SWAPX_USDC_WETH_SWAP_INFO);
-  // console.log("Swap info set for USDC to WETH");
-
-  // console.log("Setting swap info for ATETH to SCETH using SwapX");
-  // const SWAPX_ATETH_SCETH_PATH = [ATOLL_ETH, SONIC_ETH];
-  // const SWAPX_ATETH_SCETH_SWAP_INFO = await algebraSingle(SWAPX_ATETH_SCETH_PATH);
-  // await beefySwapper.setSwapInfo(ATOLL_ETH, SONIC_ETH, SWAPX_ATETH_SCETH_SWAP_INFO);
-  // console.log("Swap info set for ATETH to SCETH");
-
-  // console.log("Setting swap info for SCETH to ATETH using SwapX");
-  // const SWAPX_SCETH_ATETH_PATH = [SONIC_ETH, ATETH];
-  // const SWAPX_SCETH_ATETH_SWAP_INFO = await algebraSingle(SWAPX_SCETH_ATETH_PATH);
-  // await beefySwapper.setSwapInfo(SONIC_ETH, ATETH, SWAPX_SCETH_ATETH_SWAP_INFO);
-  // console.log("Swap info set for SCETH to ATETH");
-
-  // console.log("Setting swap info for ATETH to ATOLL using SwapX");
-  // const SWAPX_ATETH_ATOLL_PATH = [ATOLL_ETH, ATOLL];
-  // const SWAPX_ATETH_ATOLL_SWAP_INFO = await algebraSingle(SWAPX_ATETH_ATOLL_PATH);
-  // await beefySwapper.setSwapInfo(ATOLL_ETH, ATOLL, SWAPX_ATETH_ATOLL_SWAP_INFO);
-  // console.log("Swap info set for ATETH to ATOLL");
-
-  // console.log("Setting swap info for ATOLL to ATETH using SwapX");
-  // const SWAPX_ATOLL_ATETH_PATH = [ATOLL, ATOLL_ETH];
-  // const SWAPX_ATOLL_ATETH_SWAP_INFO = await algebraSingle(SWAPX_ATOLL_ATETH_PATH);
-  // await beefySwapper.setSwapInfo(ATOLL, ATOLL_ETH, SWAPX_ATOLL_ATETH_SWAP_INFO);
-  // console.log("Swap info set for ATOLL to ATETH");
-
-  // console.log("Setting swap info for wS to SCETH using SwapX");
-  // const SWAPX_WS_SCETH_PATH = [WRAPPED_NATIVE, SONIC_ETH];
-  // const SWAPX_WS_SCETH_SWAP_INFO = await algebraSingle(SWAPX_WS_SCETH_PATH);
-  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, SONIC_ETH, SWAPX_WS_SCETH_SWAP_INFO);
-  // console.log("Swap info set for wS to SCETH");
-
-  // console.log("Setting swap info for SCETH to wS using SwapX");
-  // const SWAPX_SCETH_WS_PATH = [SONIC_ETH, WRAPPED_NATIVE];
-  // const SWAPX_SCETH_WS_SWAP_INFO = await algebraSingle(SWAPX_SCETH_WS_PATH);
-  // await beefySwapper.setSwapInfo(SONIC_ETH, WRAPPED_NATIVE, SWAPX_SCETH_WS_SWAP_INFO);
-  // console.log("Swap info set for SCETH to wS");
-
-  // console.log("Setting swap info for USDC to scUSD using SwapX");
-  // const SWAPX_USDC_SCUSD_PATH = [USDC, SONIC_USD];
-  // const SWAPX_USDC_SCUSD_SWAP_INFO = await algebraSingle(SWAPX_USDC_SCUSD_PATH);
-  // await beefySwapper.setSwapInfo(USDC, SONIC_USD, SWAPX_USDC_SCUSD_SWAP_INFO);
-  // console.log("Swap info set for USDC to scUSD");
-
-  // console.log("Setting swap info for scUSD to USDC using SwapX");
-  // const SWAPX_SCUSD_USDC_PATH = [SONIC_USD, USDC];
-  // const SWAPX_SCUSD_USDC_SWAP_INFO = await algebraSingle(SWAPX_SCUSD_USDC_PATH);
-  // await beefySwapper.setSwapInfo(SONIC_USD, USDC, SWAPX_SCUSD_USDC_SWAP_INFO);
-  // console.log("Swap info set for scUSD to USDC");
+  // console.log("Setting swap info for wS to oS using SwapX");
+  // const SWAPX_WS_OS_PATH = [WRAPPED_NATIVE, ORIGIN_SONIC];
+  // const SWAPX_WS_OS_SWAP_INFO = await algebraSingle(SWAPX_WS_OS_PATH);
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, ORIGIN_SONIC, SWAPX_WS_OS_SWAP_INFO);
+  // console.log("Swap info set for wS to oS");
 
   // console.log("Setting swap info for BEETS to wS using Balancer");
   // const BALANCER_BEETS_WS_PATH = [
@@ -423,7 +309,6 @@ async function algebraSingle(path) {
     tokenIn,
     tokenOut,
     BEEFY_SWAPPER,
-    UINT256_MAX,
     0,
     0,
     0

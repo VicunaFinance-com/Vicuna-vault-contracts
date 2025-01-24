@@ -9,6 +9,14 @@ import {
     VIFI_ICHI_SWAPX_STRATEGY,
     EQUAL, 
     SWPX,
+    WRAPPED_NATIVE,
+    ORIGIN_SONIC,
+    USDC,
+    SACRA,
+    WRAPPER_ETH,
+    ATOLL_ETH,
+    SONIC_USD,
+    BEETS_STAKED_SONIC,
     VIFI_BALANCER_STRATEGY, 
     BEETS, 
     BALANCER_VAULT, 
@@ -86,35 +94,47 @@ async function main() {
     const ICHI_SWAPX_WS_USDC_WANT = "0x5f62d612c69ff7be3fbd9a0cd530d57bcbc7b642"
     const ICHI_SWAPX_WS_USDC_GAUGE = "0xdce26623440b34a93e748e131577049a8d84dded"
 
-    const ICHI_SWAPX_STS_USDC_WANT = "0x79cfab400429c81f1656df4d65363cb5fd340509"
-    const ICHI_SWAPX_STS_USDC_GAUGE = "0x7791ecc02ce43f877df2d39d8073572ded64617e"
-
     const ICHI_SWAPX_SACRA_WS_WANT = "0x13939ac0f09dade88f8b1d86c26dad934d973081"
     const ICHI_SWAPX_SACRA_WS_GAUGE = "0x413610103721df45c7e8333d5e34bb39975762f3"
-    
+
     const ICHI_SWAPX_USDC_SWPX_WANT = "0x5de651be21beede8abe808d1425b278ac4a3604b"
     const ICHI_SWAPX_USDC_SWPX_GAUGE = "0xbee97f13cc7a681436ee8de71926b8fad6f10b0f"
-
-    const ICHI_SWAPX_ATOLL_ATETH_WANT = "0x1657c5479d73cd6159048ba358b903cc4b94765e"
-    const ICHI_SWAPX_ATOLL_ATETH_GAUGE = "0x21b51b78a9a11d77ca06d75e98fa7b45b4ea96fa"
 
     const ICHI_SWAPX_USDC_WETH_WANT = "0x048d4f8ddee53dd41c35a1a2a691c0ef91eff3d6"
     const ICHI_SWAPX_USDC_WETH_GAUGE = "0x0e9c8f42349a9eb074605ba175e751bd158c1165"
 
-    const ICHI_SWAPX_WETH_USDC_WANT = "0x048d4f8ddee53dd41c35a1a2a691c0ef91eff3d6"
-    const ICHI_SWAPX_WETH_USDC_GAUGE = "0x0e9c8f42349a9eb074605ba175e751bd158c1165"
+    const ICHI_SWAPX_WETH_USDC_WANT = "0x6c7b6f02e9f5e525fc70f120f47d4a893f977d0e"
+    const ICHI_SWAPX_WETH_USDC_GAUGE = "0xc9eef8c5cf38990cadf0cb9c912085fb877c113c"
 
     const ICHI_SWAPX_ATETH_SCETH_WANT = "0x20737388dbc9f7e56f4cc69d41da62c96b355db0"
     const ICHI_SWAPX_ATETH_SCETH_GAUGE = "0xbbb10f33dcdd50bd4317459a4b051fc319b29585"
 
-    const ICHI_SWAPX_ATETH_ATOLL_WANT = "0x1657c5479d73cd6159048ba358b903cc4b94765e"
-    const ICHI_SWAPX_ATETH_ATOLL_GAUGE = "0x21b51b78a9a11d77ca06d75e98fa7b45b4ea96fa"
-
     const ICHI_SWAPX_WS_SCETH_WANT = "0x1854d5432657d1b82c60ce0f8fcb49f915b1d18d"
     const ICHI_SWAPX_WS_SCETH_GAUGE = "0x8327a42774688f7cea371747b07984c268340e87"
 
-    const ICHI_SWAPX_USDC_SCUSD_WANT = "0x776c31466f19d4e2c71bce16c0549a8bc0e37e17"
-    const ICHI_SWAPX_USDC_SCUSD_GAUGE = "0x4604782bcd6f749b271fc9d14bfd583be6e5a6cf"
+    const ICHI_SWAPX_USDC_SCUSD_WANT = "0xf77ceed15596bfc127d17ba45dea9767bc349be0"
+    const ICHI_SWAPX_USDC_SCUSD_GAUGE = "0x640429b0633851f487639bcdd8ed523ddf1bbff8"
+
+    const ICHI_SWAPX_WS_WETH_WANT = "0x0f5acfc6d67410232589265a71e80661d0352848"
+    const ICHI_SWAPX_WS_WETH_GAUGE = "0x05b8bcd4e028a112b6e69b3b1d0bad65f6088d54"
+
+    const ICHI_SWAPX_WS_STS_WANT = "0xfd10ac67449c16f368a4bb49f544e0a865a77614"
+    const ICHI_SWAPX_WS_STS_GAUGE = "0xc693c6fc1d2b44dfb5c5aa05ca2b02a91db97528"
+
+    const ICHI_SWAPX_USDC_STS_WANT = "0x86d13fef5e2f4f96c2c592ae7fd096eb5ac424ac"
+    const ICHI_SWAPX_USDC_STS_GAUGE = "0x6bd21754fb317aba1f112c3d01904669e7d34803"
+
+    const ICHI_SWAPX_OS_WS_WANT = "0xc4a71981dc8ee8ee704b6217daebad6ece185aeb"
+    const ICHI_SWAPX_OS_WS_GAUGE = "0x3a4a0040475575638beb4051d8950ea21686ce27"
+
+    const ICHI_SWAPX_SCUSD_USDC_WANT = "0x776c31466f19d4e2c71bce16c0549a8bc0e37e17"
+    const ICHI_SWAPX_SCUSD_USDC_GAUGE = "0x4604782bcd6f749b271fc9d14bfd583be6e5a6cf"
+
+    const ICHI_SWAPX_WS_OS_WANT = "0x36da3b8156c421118d1cc27956454c49eec5fc1b"
+    const ICHI_SWAPX_WS_OS_GAUGE = "0x7fcd694e0c24bf12dcbd471df38601059f2b8093"
+
+    const ICHI_SWAPX_STS_WS_WANT = "0xa68d5dbae00960de66ddead4d53faea39f21983b"
+    const ICHI_SWAPX_STS_WS_GAUGE = "0x2f9e2852de03c42c13d3dcdd2c57c0b3cf0382c1"
 
     const BALANCER_WS_STS_GAUGE = "0x8476F3A8DA52092e7835167AFe27835dC171C133"
     const BALANCER_WS_STS_WANT = "0x374641076B68371e69D03C417DAc3E5F236c32FA"
@@ -144,18 +164,22 @@ async function main() {
     // await deployEqualizerVault("VIFI EQUALIZER ws-THC", "Vifi wS-THC", EQUALIZER_WS_THC_WANT, EQUALIZER_WS_THC_GAUGE);
     // await deployEqualizerVault("VIFI EQUALIZER USDC-wETH", "Vifi USDC-wETH", EQUALIZER_USDC_WETH_WANT, EQUALIZER_USDC_WETH_GAUGE);
 
-    // await deploySwapxVault("VIFI SWAPX wS-SWPX", "Vifi wS-SWPX", ICHI_SWAPX_WS_SWPX_WANT, ICHI_SWAPX_WS_SWPX_GAUGE);
-    // await deploySwapxVault("VIFI SWAPX wS-USDC", "Vifi wS-USDC", ICHI_SWAPX_WS_USDC_WANT, ICHI_SWAPX_WS_USDC_GAUGE);
-    // await deploySwapxVault("VIFI SWAPX stS-USDC", "Vifi stS-USDC", ICHI_SWAPX_STS_USDC_WANT, ICHI_SWAPX_STS_USDC_GAUGE);
-    // await deploySwapxVault("VIFI SWAPX SACRA-wS", "Vifi SACRA-wS", ICHI_SWAPX_SACRA_WS_WANT, ICHI_SWAPX_SACRA_WS_GAUGE);
-    // await deploySwapxVault("VIFI SWAPX USDC-SWPX", "Vifi USDC-SWPX", ICHI_SWAPX_USDC_SWPX_WANT, ICHI_SWAPX_USDC_SWPX_GAUGE);
-    // await deploySwapxVault("VIFI SWAPX ATOLL-atETH", "Vifi ATOLL-atETH", ICHI_SWAPX_ATOLL_ATETH_WANT, ICHI_SWAPX_ATOLL_ATETH_GAUGE);
-    // await deploySwapxVault("VIFI SWAPX USDC-wETH", "Vifi USDC-wETH", ICHI_SWAPX_USDC_WETH_WANT, ICHI_SWAPX_USDC_WETH_GAUGE);
-    // await deploySwapxVault("VIFI SWAPX wETH-USDC", "Vifi wETH-USDC", ICHI_SWAPX_WETH_USDC_WANT, ICHI_SWAPX_WETH_USDC_GAUGE);
-    // await deploySwapxVault("VIFI SWAPX atETH-scETH", "Vifi atETH-scETH", ICHI_SWAPX_ATETH_SCETH_WANT, ICHI_SWAPX_ATETH_SCETH_GAUGE);
-    // await deploySwapxVault("VIFI SWAPX atETH-ATOLL", "Vifi atETH-ATOLL", ICHI_SWAPX_ATETH_ATOLL_WANT, ICHI_SWAPX_ATETH_ATOLL_GAUGE);
-    // await deploySwapxVault("VIFI SWAPX wS-scETH", "Vifi wS-scETH", ICHI_SWAPX_WS_SCETH_WANT, ICHI_SWAPX_WS_SCETH_GAUGE);
-    await deploySwapxVault("VIFI SWAPX USDC-scUSD", "Vifi USDC-scUSD", ICHI_SWAPX_USDC_SCUSD_WANT, ICHI_SWAPX_USDC_SCUSD_GAUGE);
+    await deploySwapxVault("VIFI SWAPX wS-SWPX", "Vifi wS-SWPX", WRAPPED_NATIVE, ICHI_SWAPX_WS_SWPX_WANT, ICHI_SWAPX_WS_SWPX_GAUGE);
+    await deploySwapxVault("VIFI SWAPX wS-USDC", "Vifi wS-USDC", WRAPPED_NATIVE, ICHI_SWAPX_WS_USDC_WANT, ICHI_SWAPX_WS_USDC_GAUGE);
+    await deploySwapxVault("VIFI SWAPX SACRA-wS", "Vifi SACRA-wS", SACRA, ICHI_SWAPX_SACRA_WS_WANT, ICHI_SWAPX_SACRA_WS_GAUGE);
+    await deploySwapxVault("VIFI SWAPX USDC-SWPX", "Vifi USDC-SWPX", USDC, ICHI_SWAPX_USDC_SWPX_WANT, ICHI_SWAPX_USDC_SWPX_GAUGE);
+    await deploySwapxVault("VIFI SWAPX USDC-wETH", "Vifi USDC-wETH", USDC, ICHI_SWAPX_USDC_WETH_WANT, ICHI_SWAPX_USDC_WETH_GAUGE);
+    await deploySwapxVault("VIFI SWAPX wETH-USDC", "Vifi wETH-USDC", WRAPPER_ETH, ICHI_SWAPX_WETH_USDC_WANT, ICHI_SWAPX_WETH_USDC_GAUGE);
+    await deploySwapxVault("VIFI SWAPX atETH-scETH", "Vifi atETH-scETH", ATOLL_ETH, ICHI_SWAPX_ATETH_SCETH_WANT, ICHI_SWAPX_ATETH_SCETH_GAUGE);
+    await deploySwapxVault("VIFI SWAPX wS-scETH", "Vifi wS-scETH", WRAPPED_NATIVE, ICHI_SWAPX_WS_SCETH_WANT, ICHI_SWAPX_WS_SCETH_GAUGE);
+    await deploySwapxVault("VIFI SWAPX USDC-scUSD", "Vifi USDC-scUSD", USDC, ICHI_SWAPX_USDC_SCUSD_WANT, ICHI_SWAPX_USDC_SCUSD_GAUGE);
+    await deploySwapxVault("VIFI SWAPX wS-wETH", "Vifi wS-wETH", WRAPPED_NATIVE, ICHI_SWAPX_WS_WETH_WANT, ICHI_SWAPX_WS_WETH_GAUGE);
+    await deploySwapxVault("VIFI SWAPX wS-stS", "Vifi wS-stS", WRAPPED_NATIVE, ICHI_SWAPX_WS_STS_WANT, ICHI_SWAPX_WS_STS_GAUGE);
+    await deploySwapxVault("VIFI SWAPX USDC-stS", "Vifi USDC-stS", USDC, ICHI_SWAPX_USDC_STS_WANT, ICHI_SWAPX_USDC_STS_GAUGE);
+    await deploySwapxVault("VIFI SWAPX oS-wS", "Vifi oS-wS", ORIGIN_SONIC, ICHI_SWAPX_OS_WS_WANT, ICHI_SWAPX_OS_WS_GAUGE);
+    await deploySwapxVault("VIFI SWAPX scUSD-USDC", "Vifi scUSD-USDC", SONIC_USD, ICHI_SWAPX_SCUSD_USDC_WANT, ICHI_SWAPX_SCUSD_USDC_GAUGE);
+    await deploySwapxVault("VIFI SWAPX wS-oS", "Vifi wS-oS", WRAPPED_NATIVE, ICHI_SWAPX_WS_OS_WANT, ICHI_SWAPX_WS_OS_GAUGE);
+    await deploySwapxVault("VIFI SWAPX stS-wS", "Vifi stS-wS", BEETS_STAKED_SONIC, ICHI_SWAPX_STS_WS_WANT, ICHI_SWAPX_STS_WS_GAUGE);
 
     // await deployBalancerVault("VIFI BALANCER wS-stS", "Vifi wS-stS", BALANCER_WS_STS_WANT, BALANCER_WS_STS_GAUGE, ZERO_ADDRESS, BALANCER_VAULT);
     // await deployBalancerVault("VIFI BALANCER USDC-SCUSD", "Vifi USDC-scUSD", BALANCER_USDC_SCUSD_WANT, BALANCER_USDC_SCUSD_GAUGE, ZERO_ADDRESS, BALANCER_VAULT);
@@ -199,7 +223,7 @@ async function deployEqualizerVault(name, symbol, want, gauge) {
     console.log(`Equalizer strategy: ${strategy.address}`);
 }
 
-async function deploySwapxVault(name, symbol, want, gauge) {
+async function deploySwapxVault(name, symbol, depositToken, want, gauge) {
     const VaultV7Factory = await ethers.getContractFactory("BeefyVaultV7Factory");
     const vaultV7Factory = VaultV7Factory.attach(VAULT_V7_FACTORY);
     const BeefyVaultV7 = await ethers.getContractFactory("BeefyVaultV7");
@@ -214,7 +238,7 @@ async function deploySwapxVault(name, symbol, want, gauge) {
         strategist: STRATEGIST,
         factory: STRATEGY_FACTORY,
         swapper: BEEFY_SWAPPER,
-        depositToken: ZERO_ADDRESS,
+        depositToken: depositToken,
         vault: vault.address,
         want: want
     }
@@ -231,6 +255,7 @@ async function deploySwapxVault(name, symbol, want, gauge) {
     console.log(`Swapx vault: ${vault.address}`);
     console.log(`Swapx strategy: ${strategy.address}`);
 }
+
 
 async function deployBalancerVault(name, symbol, want, gauge, booster, balancerVault) {
     const VaultV7Factory = await ethers.getContractFactory("BeefyVaultV7Factory");
