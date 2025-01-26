@@ -1,5 +1,5 @@
 // import VelodromeRouterAbi from "../data/abi/VelodromeRouter.json";
-import { VIFI_BALANCER_STRATEGY, VIFI_EQUALIZER_STRATEGY, VIFI_SHADOW_CLM_STRATEGY, VIFI_REWARD_POOL } from "./config-sonic";
+import { VIFI_BALANCER_STRATEGY, VIFI_EQUALIZER_STRATEGY, VIFI_SHADOW_CLM_STRATEGY, VIFI_ICHI_SWAPX_STRATEGY, VIFI_REWARD_POOL } from "./config-sonic";
 
 const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
@@ -15,6 +15,7 @@ const BEEFY_REWARD_POOL = "0xDDBfd7D6A6eA35a3e2835dc63067F9e3c250e3C4";
 // Strategies V7
 const STRATEGY_EQUALIZER_FACTORY = "0x88bC83d9Ed84754357cbadB2D0B6CF86304550D0";
 const STRATEGY_BALANCER = "0x054C64b7922b848307315ECF6CA848dcd157713d"
+const STRATEGY_ICHI = "0xc3a4fdcba79DB04b4C3e352b1C467B3Ba909D84A";
 
 // Strategies CLM
 const STRATEGY_SHADOW_CLM = "0xF1813BB9acA31AF4A935206d255a74A1731a4Bb9"
@@ -39,6 +40,10 @@ async function main() {
     // console.log(`Adding strategy ${VIFI_BALANCER_STRATEGY} to StrategyFactory`);
     // await strategyFactory.addStrategy(VIFI_BALANCER_STRATEGY, STRATEGY_BALANCER);
     // console.log(`Added strategy ${VIFI_BALANCER_STRATEGY} to StrategyFactory`);
+
+    console.log(`Adding strategy ${VIFI_ICHI_SWAPX_STRATEGY} to StrategyFactory`);
+    await strategyFactory.addStrategy(VIFI_ICHI_SWAPX_STRATEGY, STRATEGY_ICHI);
+    console.log(`Added strategy ${VIFI_ICHI_SWAPX_STRATEGY} to StrategyFactory`);
 
     console.log(`Adding strategy ${VIFI_SHADOW_CLM_STRATEGY} to StrategyFactoryCLM`);
     await strategyFactoryCLM.addStrategy(VIFI_SHADOW_CLM_STRATEGY, STRATEGY_SHADOW_CLM);

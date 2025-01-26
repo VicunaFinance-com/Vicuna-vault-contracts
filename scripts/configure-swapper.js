@@ -1,6 +1,7 @@
 import VelodromeRouterAbi from "../data/abi/VelodromeRouter.json";
 import BalancerVaultAbi from "../data/abi/BalancerVault.json";
-import { BEETS, EQUAL, EQUALIZER_ROUTER_O2, UINT256_MAX, USDC, WRAPPED_NATIVE, WRAPPER_ETH, BALANCER_VAULT, BEETS_STAKED_SONIC, INT256_MAX, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, STACKED_SONIC_SYMPHONY, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, WHALE, THC } from "./config-sonic";
+import AlgebraRouterAbi from "../data/abi/AlgebraSwapxRouterAbi.json";
+import { BEETS, EQUAL, EQUALIZER_ROUTER_O2, ALGEBRA_ROUTER, SWAPX_ROUTER_V2, UINT256_MAX, USDC, WRAPPED_NATIVE, WRAPPER_ETH, BALANCER_VAULT, BEETS_STAKED_SONIC, INT256_MAX, RINGING_STABLE_BEETS, PUT_A_RING_ON_IT, STACKED_SONIC_SYMPHONY, BRUSH, FSONIC, FIERY, ECO, GOGLZ, ANON, HEDGY, WHALE, THC, SWPX, SACRA, ATOLL, ATOLL_ETH, SONIC_ETH, SONIC_USD, ORIGIN_SONIC } from "./config-sonic";
 
 const hardhat = require("hardhat");
 const ethers = hardhat.ethers;
@@ -163,6 +164,36 @@ async function main() {
   // await beefySwapper.setSwapInfo(THC, WRAPPED_NATIVE, EQUALIZER_THC_WS_SWAP_INFO);
   // console.log("Swap info set for THC to wS");
 
+  // console.log("Setting swap info for wS to scUSD using Equalizer");
+  // const EQUALIZER_WS_SCUSD = await EqualizerRouter.populateTransaction.swapExactTokensForTokens(0, 0, [[WRAPPED_NATIVE, SONIC_USD, false]], BEEFY_SWAPPER, UINT256_MAX);
+  // const EQUALIZER_WS_SCUSD_SWAP_INFO = [EQUALIZER_ROUTER_O2, EQUALIZER_WS_SCUSD.data, EQUALIZER_AMOUNT_INDEX, EQUALIZER_MIN_AMOUNT_INDEX, EQUALIZER_AMOUNT_SIGN_INDEX];
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, SONIC_USD, EQUALIZER_WS_SCUSD_SWAP_INFO);
+  // console.log("Swap info set for THC to wS");
+
+  // console.log("Setting swap info for SWPX to wS using SwapX");
+  // const SWAPX_SWPX_WS_PATH = [SWPX, WRAPPED_NATIVE];
+  // const SWAPX_SWPX_WS_SWAP_INFO = await algebraSingle(SWAPX_SWPX_WS_PATH);
+  // await beefySwapper.setSwapInfo(SWPX, WRAPPED_NATIVE, SWAPX_SWPX_WS_SWAP_INFO);
+  // console.log("Swap info set for SWPX to wS");
+
+  // console.log("Setting swap info for wS to SACRA using SwapX");
+  // const SWAPX_WS_SACRA_PATH = [WRAPPED_NATIVE, SACRA];
+  // const SWAPX_WS_SACRA_SWAP_INFO = await algebraSingle(SWAPX_WS_SACRA_PATH);
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, SACRA, SWAPX_WS_SACRA_SWAP_INFO);
+  // console.log("Swap info set for wS to SACRA");
+
+  // console.log("Setting swap info for wS to atETH using SwapX");
+  // const SWAPX_WS_ATETH_PATH = [WRAPPED_NATIVE, ATOLL_ETH];
+  // const SWAPX_WS_ATETH_SWAP_INFO = await algebraSingle(SWAPX_WS_ATETH_PATH);
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, ATOLL_ETH, SWAPX_WS_ATETH_SWAP_INFO);
+  // console.log("Swap info set for wS to atETH");
+
+  // console.log("Setting swap info for wS to oS using SwapX");
+  // const SWAPX_WS_OS_PATH = [WRAPPED_NATIVE, ORIGIN_SONIC];
+  // const SWAPX_WS_OS_SWAP_INFO = await algebraSingle(SWAPX_WS_OS_PATH);
+  // await beefySwapper.setSwapInfo(WRAPPED_NATIVE, ORIGIN_SONIC, SWAPX_WS_OS_SWAP_INFO);
+  // console.log("Swap info set for wS to oS");
+
   // console.log("Setting swap info for BEETS to wS using Balancer");
   // const BALANCER_BEETS_WS_PATH = [
   //   [BEETS, STS, "0x10ac2f9dae6539e77e372adb14b1bf8fbd16b3e8000200000000000000000005"],
@@ -260,6 +291,36 @@ async function balancer(path) {
 
   const swapInfo = [
     BALANCER_VAULT,
+    txData.data,
+    amountIndex,
+    minIndex,
+    minAmountSign
+  ];
+
+  return swapInfo;
+};
+
+async function algebraSingle(path) {
+  const router = await ethers.getContractAt(AlgebraRouterAbi, ALGEBRA_ROUTER);
+
+  const [tokenIn, tokenOut] = path;
+  
+  const exactInputSingleParams = [
+    tokenIn,
+    tokenOut,
+    BEEFY_SWAPPER,
+    0,
+    0,
+    0
+  ]
+  const txData = await router.populateTransaction.exactInputSingle(exactInputSingleParams);
+
+  const amountIndex = 100;
+  const minIndex = 132;
+  const minAmountSign = 0;
+
+  const swapInfo = [
+    ALGEBRA_ROUTER,
     txData.data,
     amountIndex,
     minIndex,
