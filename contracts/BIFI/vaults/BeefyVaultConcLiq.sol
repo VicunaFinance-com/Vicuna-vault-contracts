@@ -2,7 +2,8 @@
 pragma solidity 0.8.23;
 
 import {IERC20Metadata} from "@openzeppelin-4/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import {ERC20Upgradeable, IERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import {ERC20PermitUpgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol";
+import {IERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import {SafeERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
 import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
@@ -13,7 +14,7 @@ import {IStrategyConcLiq} from "../interfaces/beefy/IStrategyConcLiq.sol";
  * This is the contract that receives funds and that users interface with.
  * The yield optimizing strategy itself is implemented in a separate 'Strategy.sol' contract.
  */
-contract BeefyVaultConcLiq is ERC20Upgradeable, OwnableUpgradeable, ReentrancyGuardUpgradeable {
+contract BeefyVaultConcLiq is ERC20PermitUpgradeable, OwnableUpgradeable, ReentrancyGuardUpgradeable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
     
     /// @notice The strategy currently in use by the vault.
@@ -34,7 +35,7 @@ contract BeefyVaultConcLiq is ERC20Upgradeable, OwnableUpgradeable, ReentrancyGu
     error NotEnoughTokens();
 
     // Events 
-    event Deposit(address indexed user, uint256 shares, uint256 amount0, uint256 amount1);
+    event Deposit(address indexed user, uint256 shares, uint256 amount0, uint256 amount1, uint256 fee0, uint256 fee1);
     event Withdraw(address indexed user, uint256 shares, uint256 amount0, uint256 amount1);
 
     /// @custom:oz-upgrades-unsafe-allow constructor
@@ -54,6 +55,7 @@ contract BeefyVaultConcLiq is ERC20Upgradeable, OwnableUpgradeable, ReentrancyGu
         string calldata _symbol
     ) external initializer {
         __ERC20_init(_name, _symbol);
+        __ERC20Permit_init(_name);
         __Ownable_init();
         __ReentrancyGuard_init();
         strategy = IStrategyConcLiq(_strategy);
@@ -65,6 +67,14 @@ contract BeefyVaultConcLiq is ERC20Upgradeable, OwnableUpgradeable, ReentrancyGu
     */
     function isCalm() external view returns (bool) {
         return strategy.isCalm();
+    }
+
+    /** 
+     * @notice The fee for swaps in the underlying pool in 18 decimals
+     * @return uint256 swap fee for the underlying pool
+    */
+    function swapFee() public view returns (uint256) {
+        return strategy.swapFee();
     }
 
     /** 
@@ -115,12 +125,12 @@ contract BeefyVaultConcLiq is ERC20Upgradeable, OwnableUpgradeable, ReentrancyGu
      * @param _amount1 the amount of token1 to deposit.
      * @return shares amount of shares that the deposit will represent.
      */
-    function previewDeposit(uint256 _amount0, uint256 _amount1) external view returns (uint256 shares, uint256 amount0, uint256 amount1) {
+    function previewDeposit(uint256 _amount0, uint256 _amount1) external view returns (uint256 shares, uint256 amount0, uint256 amount1, uint256 fee0, uint256 fee1) {
         uint256 price = strategy.price();
 
         (uint bal0, uint bal1) = balances();
 
-        (amount0, amount1) = _getTokensRequired(price, _amount0, _amount1, bal0, bal1);
+        (amount0, amount1, fee0, fee1) = _getTokensRequired(price, _amount0, _amount1, bal0, bal1, swapFee());
 
         uint256 _totalSupply = totalSupply();
 
@@ -129,11 +139,11 @@ contract BeefyVaultConcLiq is ERC20Upgradeable, OwnableUpgradeable, ReentrancyGu
             bal1 = _amount1;
         }
 
-        shares = amount1 + (amount0 * price / PRECISION); 
+        shares = (amount1 - fee1) + ((amount0 - fee0) * price / PRECISION); 
 
         if (_totalSupply > 0) {
             // How much of wants() do we have in token 1 equivalents;
-            uint256 token1EquivalentBalance = (((bal0 * price) + PRECISION - 1) / PRECISION) + bal1;
+            uint256 token1EquivalentBalance = ((((bal0 + fee0) * price) + PRECISION - 1) / PRECISION) + (bal1 + fee1);
             shares = shares * _totalSupply / token1EquivalentBalance;
         } else {
             // First user donates MINIMUM_SHARES for security of the vault. 
@@ -142,18 +152,18 @@ contract BeefyVaultConcLiq is ERC20Upgradeable, OwnableUpgradeable, ReentrancyGu
     }
 
     /// @notice Get the amount of tokens required to deposit to reach the desired balance of the strategy.
-    function _getTokensRequired(uint256 _price, uint256 _amount0, uint256 _amount1, uint256 _bal0, uint256 _bal1) private pure returns (uint256 depositAmount0, uint256 depositAmount1) {
+    function _getTokensRequired(uint256 _price, uint256 _amount0, uint256 _amount1, uint256 _bal0, uint256 _bal1, uint256 _swapFee) private pure returns (uint256 depositAmount0, uint256 depositAmount1, uint256 feeAmount0, uint256 feeAmount1) {
         // get the amount of bal0 that is equivalent to bal1
-        if (_bal0 == 0 && _bal1 == 0) return (_amount0, _amount1);
+        if (_bal0 == 0 && _bal1 == 0) return (_amount0, _amount1, 0, 0);
 
         uint256 bal0InBal1 = (_bal0 * _price) / PRECISION;
 
         // check which side is lower and supply as much as possible
         if (_bal1 < bal0InBal1) {
-            uint256 finalBalanceForAmount1 = _bal1 + _amount1;
-            uint256 owedAmount0 = finalBalanceForAmount1 > bal0InBal1 
-                ? (finalBalanceForAmount1 - bal0InBal1) * PRECISION / _price 
+            uint256 owedAmount0 = _bal1 + _amount1 > bal0InBal1
+                ? (_bal1 + _amount1 - bal0InBal1) * PRECISION / _price 
                 : 0;
+
             if (owedAmount0 > _amount0) {
                 depositAmount0 = _amount0;
                 depositAmount1 = _amount1 - ( (owedAmount0 - _amount0) * _price / PRECISION );
@@ -161,18 +171,34 @@ contract BeefyVaultConcLiq is ERC20Upgradeable, OwnableUpgradeable, ReentrancyGu
                 depositAmount0 = owedAmount0;
                 depositAmount1 = _amount1;
             }
+
+            uint256 fill = _amount1 < (bal0InBal1 - _bal1) ? _amount1 : (bal0InBal1 - _bal1);
+            uint256 slidingFee = 
+                (bal0InBal1 * PRECISION + (owedAmount0 * _price)) 
+                / (bal0InBal1 + _bal1 + fill + (2 * owedAmount0 * _price / PRECISION));
+
+            feeAmount1 = fill * (_swapFee * slidingFee / PRECISION) / 1e18;
         } else {
-            uint256 finalBalanceForAmount0 = bal0InBal1 + ( _amount0 * _price / PRECISION );
-            uint256 owedAmount1 = finalBalanceForAmount0 > _bal1 
-                ? finalBalanceForAmount0 - _bal1
+            uint256 owedAmount1 = bal0InBal1 + ( _amount0 * _price / PRECISION ) > _bal1
+                ? bal0InBal1 + ( _amount0 * _price / PRECISION ) - _bal1
                 : 0;
+               
             if (owedAmount1 > _amount1) {
-                depositAmount0 = _amount0 - ( (owedAmount1 - _amount1) * PRECISION / _price );
+                depositAmount0 = _amount0 - ( (owedAmount1 - _amount1) * PRECISION / _price);
                 depositAmount1 = _amount1;
             } else {
                 depositAmount0 = _amount0;
                 depositAmount1 = owedAmount1;
             }
+
+            uint256 fill = _amount0 < (_bal1 - bal0InBal1) * PRECISION / _price
+                ? _amount0 
+                : (_bal1 - bal0InBal1) * PRECISION / _price;
+            uint256 slidingFee =
+                (_bal1 + owedAmount1) * PRECISION
+                / (bal0InBal1 + _bal1 + (fill * _price / PRECISION) + (2 * owedAmount1));
+
+            feeAmount0 = fill * (_swapFee * slidingFee / PRECISION) / 1e18;
         }
     }
 
@@ -194,24 +220,26 @@ contract BeefyVaultConcLiq is ERC20Upgradeable, OwnableUpgradeable, ReentrancyGu
         // Transfer funds from user and send to strategy.
         (uint256 _bal0, uint256 _bal1) = balances();
         uint256 price = strategy.price();
-        (uint256 amount0, uint256 amount1) = _getTokensRequired(price, _amount0, _amount1, _bal0, _bal1);
+        (uint256 amount0, uint256 amount1, uint256 fee0, uint256 fee1) = 
+            _getTokensRequired(price, _amount0, _amount1, _bal0, _bal1, swapFee());
         if (amount0 > _amount0 || amount1 > _amount1) revert NotEnoughTokens();
         
         if (amount0 > 0) IERC20Upgradeable(token0).safeTransferFrom(msg.sender, address(strategy), amount0);
         if (amount1 > 0) IERC20Upgradeable(token1).safeTransferFrom(msg.sender, address(strategy), amount1);
-        (uint256 _after0, uint256 _after1) = balances();
-        strategy.deposit();
-        
-        amount0 = _after0 - _bal0;
-        amount1 = _after1 - _bal1;
 
-        uint256 shares = amount1 + (amount0 * price / PRECISION);
+        { // scope to avoid stack too deep errors
+            (uint256 _after0, uint256 _after1) = balances();
+            amount0 = _after0 - _bal0;
+            amount1 = _after1 - _bal1;
+        }
+
+        strategy.deposit();
+        uint256 shares = (amount1 - fee1) + ((amount0 - fee0) * price / PRECISION);
 
         uint256 _totalSupply = totalSupply();
         if (_totalSupply > 0) {
             // How much of wants() do we have in token 1 equivalents;
-            uint256 token1EquivalentBalance = (((_bal0 * price) + PRECISION - 1) / PRECISION) + _bal1;
-            shares = shares * _totalSupply / token1EquivalentBalance;
+            shares = shares * _totalSupply / (((((_bal0 + fee0) * price) + PRECISION - 1) / PRECISION) + (_bal1 + fee1));
         } else {
             // First user donates MINIMUM_SHARES for security of the vault. 
             shares =  shares - MINIMUM_SHARES;
@@ -222,7 +250,7 @@ contract BeefyVaultConcLiq is ERC20Upgradeable, OwnableUpgradeable, ReentrancyGu
         if (shares == 0) revert NoShares();
 
         _mint(msg.sender, shares);
-        emit Deposit(msg.sender, shares, amount0, amount1);
+        emit Deposit(msg.sender, shares, amount0, amount1, fee0, fee1);
     }
 
     /**

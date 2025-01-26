@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.19;
+pragma solidity 0.8.23;
 
 import { ERC20Upgradeable } from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import { SafeERC20Upgradeable, IERC20Upgradeable, IERC20PermitUpgradeable } from "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
 
-/// @title Reward pool for BIFI
+/// @title Reward pool for Beefy
 /// @author kexley, Beefy
-/// @notice Multi-reward staking contract for BIFI
+/// @notice Multi-reward staking contract
 /// @dev Multiple rewards can be added to this contract by the owner. A receipt token is issued for 
-/// staking and is used for withdrawing the staked BIFI.
+/// staking and is used for withdrawing the staked tokens.
 contract BeefyRewardPool is ERC20Upgradeable, OwnableUpgradeable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
 
@@ -19,8 +19,8 @@ contract BeefyRewardPool is ERC20Upgradeable, OwnableUpgradeable {
     /// @param duration Distribution length of time in seconds
     /// @param lastUpdateTime Latest timestamp of an update
     /// @param rate Distribution speed in wei per second
-    /// @param rewardPerTokenStored Stored reward value per staked token in 18 decimals
-    /// @param userRewardPerTokenPaid Stored reward value per staked token in 18 decimals at the 
+    /// @param rewardPerTokenStored Stored reward value per staked token in 27 decimals
+    /// @param userRewardPerTokenPaid Stored reward value per staked token in 27 decimals at the 
     /// last time a user was paid the reward
     /// @param earned Value of reward still owed to the user
     struct RewardInfo {
@@ -65,8 +65,8 @@ contract BeefyRewardPool is ERC20Upgradeable, OwnableUpgradeable {
     event AddReward(address reward);
     /// @notice More of an existing reward has been added to be distributed
     event NotifyReward(address indexed reward, uint256 amount, uint256 duration);
-    /// @notice A reward has been removed from distribution and sent to the recipient
-    event RemoveReward(address reward, address recipient);
+    /// @notice A reward has been removed from distribution
+    event RemoveReward(address reward);
     /// @notice The owner has removed tokens that are not supported by this contract
     event RescueTokens(address token, address recipient);
     /// @notice An address has been added to or removed from the whitelist
@@ -100,6 +100,11 @@ contract BeefyRewardPool is ERC20Upgradeable, OwnableUpgradeable {
         _;
     }
 
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
     /* ---------------------------------- EXTERNAL FUNCTIONS ---------------------------------- */
 
     /// @notice Initialize the contract, callable only once
@@ -109,6 +114,13 @@ contract BeefyRewardPool is ERC20Upgradeable, OwnableUpgradeable {
         __Ownable_init();
         stakedToken = IERC20Upgradeable(_stakedToken);
         rewardMax = 100;
+    }
+
+    /// @notice Stake BIFI tokens
+    /// @dev An equal number of receipt tokens will be minted to the caller
+    /// @param _amount Amount of BIFI to stake
+    function stake(uint256 _amount) external update(msg.sender) {
+        _stake(msg.sender, _amount);
     }
 
     /// @notice Stake BIFI tokens with a permit
@@ -176,6 +188,12 @@ contract BeefyRewardPool is ERC20Upgradeable, OwnableUpgradeable {
     /// @return earnedAmount Amount of the user's earned reward
     function earned(address _user, address _reward) external view returns (uint256 earnedAmount) {
         earnedAmount = _earned(_user, _reward);
+    }
+
+    /// @notice View the reward array length
+    /// @return length Number of reward tokens
+    function rewardsLength() external view returns (uint256 length) {
+        length = rewards.length;
     }
 
     /// @notice View the reward information
@@ -277,8 +295,7 @@ contract BeefyRewardPool is ERC20Upgradeable, OwnableUpgradeable {
     /// @dev All unclaimed earnings are ignored. Re-adding the reward will have a new set of
     /// reward information so any unclaimed earnings cannot be recovered
     /// @param _reward Address of the reward to be removed
-    /// @param _recipient Address of the recipient that the removed reward was sent to
-    function removeReward(address _reward, address _recipient) external onlyOwner {
+    function removeReward(address _reward) external onlyOwner {
         if (!_rewardExists(_reward)) revert RewardNotFound(_reward);
 
         uint256 replacedIndex = _index[_reward];
@@ -287,10 +304,7 @@ contract BeefyRewardPool is ERC20Upgradeable, OwnableUpgradeable {
         _index[endToken] = replacedIndex;
         rewards.pop();
 
-        uint256 rewardBal = IERC20Upgradeable(_reward).balanceOf(address(this));
-        IERC20Upgradeable(_reward).safeTransfer(_recipient, rewardBal);
-
-        emit RemoveReward(_reward, _recipient);
+        emit RemoveReward(_reward);
     }
 
     /// @notice Owner function to remove unsupported tokens sent to this contract
@@ -382,7 +396,7 @@ contract BeefyRewardPool is ERC20Upgradeable, OwnableUpgradeable {
             rewardPerToken = rewardData.rewardPerTokenStored + (
                 (_lastTimeRewardApplicable(rewardData.periodFinish) - rewardData.lastUpdateTime) 
                 * rewardData.rate
-                * 1e18 
+                * 1e27 
                 / totalSupply()
             );
         }
@@ -397,7 +411,7 @@ contract BeefyRewardPool is ERC20Upgradeable, OwnableUpgradeable {
         earnedAmount = rewardData.earned[_user] + (
             balanceOf(_user) * 
             (_rewardPerToken(_reward) - rewardData.userRewardPerTokenPaid[_user]) 
-            / 1e18
+            / 1e27
         );
     }
 
