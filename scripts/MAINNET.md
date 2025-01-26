@@ -38,6 +38,34 @@ Equalizer vault for VIFI EQUALIZER USDC-wETH symbol: Vifi USDC-wETH deployed
 Equalizer vault: 0x8079B4700d90ACF56d820C706Ac3cB922e5f2eC2
 Equalizer strategy: 0x76DB3Ba69A019B0888809C96aCdb82101aA01B1E
 
+Equalizer vault for VIFI EQUALIZER ws-BRUSH symbol: Vifi wS-BRUSH deployed
+Equalizer vault: 0x585A8941a9faeD644829Ce5CF7919776DBd53990
+Equalizer strategy: 0xD34fc24A9ae9F55D07E9C52eae47D334705A1e79
+
+Equalizer vault for VIFI EQUALIZER ws-fSONIC symbol: Vifi wS-fSONIC deployed
+Equalizer vault: 0x1Fc31fFefEe5726d4011aeD65ddB928F95027219
+Equalizer strategy: 0x2Db4fC26eba87f4204dF7D58a55AAA920C870654
+
+Equalizer vault for VIFI EQUALIZER ws-GOGLZ symbol: Vifi wS-GOGLZ deployed
+Equalizer vault: 0xf82d99F2a745e479f27b191fdF74b338887e73e2
+Equalizer strategy: 0x17f2B343A5E3BaEC18507c0b28894A5fb311c835
+
+Equalizer vault for VIFI EQUALIZER ws-FIERY symbol: Vifi wS-FIERY deployed
+Equalizer vault: 0x95043378f9BC0c192c367450a2114F63907F4755
+Equalizer strategy: 0xfE125F18A4bfBF697414b918e2C39325DC52BEE0
+
+Equalizer vault for VIFI EQUALIZER ws-ECO symbol: Vifi wS-ECO deployed
+Equalizer vault: 0x845Df2f5f394879caB662247cFF77fE18787e7Ad
+Equalizer strategy: 0x1B390A5FcD5996A26f59106C3b8b9E6f2c03809d
+
+Equalizer vault for VIFI EQUALIZER ws-Anon symbol: Vifi wS-Anon deployed
+Equalizer vault: 0x15be5c53Aa95e6c418BCB365081ab3e786904b04
+Equalizer strategy: 0xd6Ef3AAb9fE5687e8e97e1788004f86832803f15
+
+Equalizer vault for VIFI EQUALIZER ws-HEDGY symbol: Vifi wS-HEDGY deployed
+Equalizer vault: 0xFE79b76B88c0aeD9Ce16f9A5834a34C45a2f4862
+Equalizer strategy: 0xD9590d58cD9660E63AE95545cA438FdBe0df08e4
+
 Balancer vault for VIFI BALANCER wS-stS symbol: Vifi wS-stS deployed
 Balancer vault: 0x02D742f182D2a588c54E7DC998aD19f9D795bC51
 Balancer strategy: 0x4fF17953eFB562c448f34323Bbd1C3aB42A2434B
@@ -66,33 +94,13 @@ Shadow CLM strategy: 0x31c0AAED98Ce01299167A56EF54BA7030a86b7fe
 Shadow CLM reward pool: 0xfb521fc3BCd38C77Dc0125cCBF96B718bf54F8C4
 
 TO ADD:
-Equalizer vault for VIFI EQUALIZER ws-BRUSH symbol: Vifi wS-BRUSH deployed
-Equalizer vault: 0x585A8941a9faeD644829Ce5CF7919776DBd53990
-Equalizer strategy: 0xD34fc24A9ae9F55D07E9C52eae47D334705A1e79
+Equalizer vault for VIFI EQUALIZER ws-WHALE symbol: Vifi wS-WHALE deployed
+Equalizer vault: 0x85C404ea674651851daA1e62A33bF145b1153E65
+Equalizer strategy: 0x6Ecb6C2D15ADC9693884b2579d450616fF88025C
 
-Equalizer vault for VIFI EQUALIZER ws-fSONIC symbol: Vifi wS-fSONIC deployed
-Equalizer vault: 0x1Fc31fFefEe5726d4011aeD65ddB928F95027219
-Equalizer strategy: 0x2Db4fC26eba87f4204dF7D58a55AAA920C870654
-
-Equalizer vault for VIFI EQUALIZER ws-GOGLZ symbol: Vifi wS-GOGLZ deployed
-Equalizer vault: 0xf82d99F2a745e479f27b191fdF74b338887e73e2
-Equalizer strategy: 0x17f2B343A5E3BaEC18507c0b28894A5fb311c835
-
-Equalizer vault for VIFI EQUALIZER ws-FIERY symbol: Vifi wS-FIERY deployed
-Equalizer vault: 0x95043378f9BC0c192c367450a2114F63907F4755
-Equalizer strategy: 0xfE125F18A4bfBF697414b918e2C39325DC52BEE0
-
-Equalizer vault for VIFI EQUALIZER ws-ECO symbol: Vifi wS-ECO deployed
-Equalizer vault: 0x845Df2f5f394879caB662247cFF77fE18787e7Ad
-Equalizer strategy: 0x1B390A5FcD5996A26f59106C3b8b9E6f2c03809d.
-
-Equalizer vault for VIFI EQUALIZER ws-Anon symbol: Vifi wS-Anon deployed
-Equalizer vault: 0x15be5c53Aa95e6c418BCB365081ab3e786904b04
-Equalizer strategy: 0xd6Ef3AAb9fE5687e8e97e1788004f86832803f15
-
-Equalizer vault for VIFI EQUALIZER ws-HEDGY symbol: Vifi wS-HEDGY deployed
-Equalizer vault: 0xFE79b76B88c0aeD9Ce16f9A5834a34C45a2f4862
-Equalizer strategy: 0xD9590d58cD9660E63AE95545cA438FdBe0df08e4
+Equalizer vault for VIFI EQUALIZER ws-THC symbol: Vifi wS-THC deployed
+Equalizer vault: 0x89fcD4093719e1d539F4A7953c53020C7b6d2e2E
+Equalizer strategy: 0xf37E9949f1BeCeAC1a15eB30b3b2aC1a99FF93bF
 
 OLD:
 StrategyEqualizerFactory: 0x560F29633a2f376b556539eF3d0c2D8C371deBD3
