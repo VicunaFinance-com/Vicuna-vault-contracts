@@ -2,15 +2,20 @@
 // import { , UINT256_MAX,  } from "./config-sonic";
 import {
     VIFI_REWARD_POOL,
-    EQUALIZER_ROUTER_O2, 
-    STRATEGIST, 
-    ZERO_ADDRESS, 
-    VIFI_EQUALIZER_STRATEGY, 
-    EQUAL, 
-    VIFI_BALANCER_STRATEGY, 
-    BEETS, 
-    BALANCER_VAULT, 
-    VIFI_SHADOW_CLM_STRATEGY
+    EQUALIZER_ROUTER_O2,
+    STRATEGIST,
+    ZERO_ADDRESS,
+    VIFI_EQUALIZER_STRATEGY,
+    EQUAL,
+    VIFI_BALANCER_STRATEGY,
+    BEETS,
+    BALANCER_VAULT,
+    VIFI_SHADOW_CLM_STRATEGY,
+    VIFI_ICHI_EQUALIZER_STRATEGY,
+    KEEPER,
+    FEE_RECIPIENT,
+    FEE_CONFIGURATOR,
+    WRAPPED_NATIVE
 } from "./config-sonic";
 
 const hardhat = require("hardhat");
@@ -64,11 +69,16 @@ async function main() {
     const SHADOW_WS_STS_POOL = "0xde861c8fc9ab78fe00490c5a38813d26e2d09c95"
     const SHADOW_WS_WETH_POOL = "0xb6d9b069f6b96a507243d501d1a23b3fccfc85d3"
 
+    const ICHI_EQUALIZER_WS_USDC_WANT = "0x238C26DDEa068190Fe715b095463B82796F0058B";
+    const ICHI_EQUALIZER_WS_USDC_GAUGE = "0x610262807FAfB649A8F63942E59c03a4D5b2fE7f";
+    const ICHI_EQUALIZER_WS_USDC_DEPOSIT_HELPER = "0x4c8c0D2Ca19a97896AA9135449e6d6471a53FC5f";
+    const ICHI_EQUALIZER_WS_USDC_VAULT_DEPLOYER = "0x0b2a31D95B1a4c8b1e772599ffcB8875FB4e2d33";
+
 
     // await deployEqualizerVault("VIFI EQUALIZER wS-USDC", "Vifi wS-USDC", EQUALIZER_WS_USDC_WANT, EQUALZIER_WS_USDC_GAUGE);
     // await deployEqualizerVault("VIFI EQUALIZER ws-EQUAL", "Vifi wS-EQUAL", EQUALIZER_WS_EQUAL_WANT, EQUALZIER_WS_EQUAL_GAUGE);
     // await deployEqualizerVault("VIFI EQUALIZER ws-stS", "Vifi wS-stS", EQUALIZER_WS_STS_WANT, EQUALIZER_WS_STS_GAUGE);
-    await deployEqualizerVault("VIFI EQUALIZER USDC-wETH", "Vifi USDC-wETH", EQUALIZER_USDC_WETH_WANT, EQUALIZER_USDC_WETH_GAUGE);
+    //await deployEqualizerVault("VIFI EQUALIZER USDC-wETH", "Vifi USDC-wETH", EQUALIZER_USDC_WETH_WANT, EQUALIZER_USDC_WETH_GAUGE);
 
     // await deployBalancerVault("VIFI BALANCER wS-stS", "Vifi wS-stS", BALANCER_WS_STS_WANT, BALANCER_WS_STS_GAUGE, ZERO_ADDRESS, BALANCER_VAULT);
     // await deployBalancerVault("VIFI BALANCER USDC-SCUSD", "Vifi USDC-scUSD", BALANCER_USDC_SCUSD_WANT, BALANCER_USDC_SCUSD_GAUGE, ZERO_ADDRESS, BALANCER_VAULT);
@@ -78,6 +88,44 @@ async function main() {
     // await deployShadowClmVault("VIFI SHADOW CLM WS-STS", "Vifi wS-stS SCLM", SHADOW_WS_STS_POOL, ZERO_ADDRESS, 17);
     // await deployShadowClmVault("VIFI SHADOW CLM WS-WETH", "Vifi wS-wETH SCLM", SHADOW_WS_WETH_POOL, ZERO_ADDRESS, 17);
 
+    await deployIchiEqualizerVault("VIFI ICHI EQUALIZER CL wS-USDC.e", "Vifi wS-USDC.e CL", ICHI_EQUALIZER_WS_USDC_WANT, ICHI_EQUALIZER_WS_USDC_GAUGE, ICHI_EQUALIZER_WS_USDC_DEPOSIT_HELPER, ICHI_EQUALIZER_WS_USDC_VAULT_DEPLOYER);
+}
+
+async function deployIchiEqualizerVault(name, symbol, want, gauge, ichiDepositHelper, vaultDeployer) {
+    const VaultV7Factory = await ethers.getContractFactory("BeefyVaultV7Factory");
+    const vaultV7Factory = VaultV7Factory.attach(VAULT_V7_FACTORY);
+    const BeefyVaultV7 = await ethers.getContractFactory("BeefyVaultV7");
+    const vault = BeefyVaultV7.attach(await clone(() => vaultV7Factory.cloneVault()));
+    const StrategyFactory = await ethers.getContractFactory("StrategyFactory");
+    const strategyFactory = StrategyFactory.attach(STRATEGY_FACTORY);
+    const StrategyEqualizerIchi = await ethers.getContractFactory("StrategyEqualizerIchi");
+    const strategy = StrategyEqualizerIchi.attach(await clone(() => strategyFactory.createStrategy(VIFI_ICHI_EQUALIZER_STRATEGY)));
+
+    console.log("Initializing ICHI Equalizer strategy");
+
+    const addresses = {
+        vault: vault.address,
+        unirouter: EQUALIZER_ROUTER_O2,
+        keeper: KEEPER,
+        strategist: STRATEGIST,
+        beefyFeeRecipient: FEE_RECIPIENT,
+        beefyFeeConfig: FEE_CONFIGURATOR
+    }
+
+    const nativeToDepositRoute = [{from: WRAPPED_NATIVE, to: WRAPPED_NATIVE, stable: false}];
+    const outputToNativeRoute = [{from: EQUAL, to: WRAPPED_NATIVE, stable: false}];
+
+    await strategy.initialize(want, gauge, ichiDepositHelper, vaultDeployer,
+        outputToNativeRoute, nativeToDepositRoute, addresses);
+    console.log("Initialized ICHI Equalizer strategy");
+
+    console.log("Initializing ICHI Equalizer vault");
+    await vault.initialize(strategy.address, name, symbol, VAULT_X);
+    console.log("Initialized ICHI Equalizer vault");
+
+    console.log(`ICHI Equalizer vault for ${name} symbol: ${symbol} deployed`);
+    console.log(`ICHI Equalizer vault: ${vault.address}`);
+    console.log(`ICHI Equalizer strategy: ${strategy.address}`);
 }
 
 async function deployEqualizerVault(name, symbol, want, gauge) {

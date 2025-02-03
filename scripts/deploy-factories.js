@@ -1,11 +1,9 @@
-import { WRAPPED_NATIVE, KEEPER, FEE_RECIPIENT } from "./config-sonic";
+import { WRAPPED_NATIVE, KEEPER, FEE_RECIPIENT, FEE_CONFIGURATOR } from "./config-sonic";
 import { verify } from "./utils";
 
 const hardhat = require("hardhat");
 
 const ethers = hardhat.ethers;
-
-const FEE_CONFIGURATOR = "0x542D0AaF607f251D26aFB35bFA929cD61c634F96"
 
 async function main() {
     await hardhat.run("compile");

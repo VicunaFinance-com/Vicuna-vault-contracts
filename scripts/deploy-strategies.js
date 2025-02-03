@@ -25,6 +25,16 @@ async function main() {
     await verify(strategyBalancer.address, []);
     console.log("Verified StrategyBalancer");
 
+    console.log('Deploying StrategyEqualizerIchi');
+    const StrategyEqualizerIchi = await ethers.getContractFactory("StrategyEqualizerIchi");
+    const strategyEqualizerIchi = await StrategyEqualizerIchi.deploy();
+    await strategyEqualizerIchi.deployed();
+    console.log(`StrategyEqualizerIchi deployed to ${strategyEqualizerIchi.address}`);
+
+    console.log("Verifying StrategyEqualizerIchi");
+    await verify(strategyEqualizerIchi.address, []);
+    console.log("Verified StrategyEqualizerIchi");
+
     console.log("Deploying StrategyPassiveManagerShadow");
     const StrategyPassiveManagerShadow = await ethers.getContractFactory("StrategyPassiveManagerShadow");
     const strategyPassiveManagerShadow = await StrategyPassiveManagerShadow.deploy();
@@ -38,6 +48,7 @@ async function main() {
     console.log("Strategy deployment complete");
     console.log(`StrategyEqualizerFactory: ${strategyEqualizerFactory.address}`);
     console.log(`StrategyBalancer: ${strategyBalancer.address}`);
+    console.log(`StrategyEqualizerIchi: ${strategyEqualizerIchi.address}`);
     console.log(`StrategyPassiveManagerShadow: ${strategyPassiveManagerShadow.address}`);
 }
 
