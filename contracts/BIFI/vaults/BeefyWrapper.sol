@@ -169,15 +169,19 @@ contract BeefyWrapper is ERC4626Upgradeable {
         }
         _burn(owner, shares);
 
-        uint256 balance = IERC20Upgradeable(asset()).balanceOf(address(this));
+        uint256 beforeWithdraw = IERC20Upgradeable(asset()).balanceOf(address(this));
 
         IVault(vault).withdraw(shares);
 
         IERC20Upgradeable(asset()).safeTransfer(receiver, assets);
 
         /// Prevent assets from being left over in the wrapper
-        if (IERC20Upgradeable(asset()).balanceOf(address(this)) > balance) revert LeftOverAssets();
-
+        uint256 afterWithdraw = IERC20Upgradeable(asset()).balanceOf(address(this));
+        if(afterWithdraw > beforeWithdraw) {
+            uint256 leftover = afterWithdraw - beforeWithdraw;
+            IVault(vault).deposit(leftover);
+        }
+        
         emit Withdraw(caller, receiver, owner, assets, shares);
     }
 
