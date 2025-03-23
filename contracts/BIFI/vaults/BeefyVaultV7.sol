@@ -2,7 +2,6 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts-upgradeable/utils/math/MathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
@@ -105,19 +104,7 @@ contract BeefyVaultV7 is ERC20Upgradeable, OwnableUpgradeable, ReentrancyGuardUp
         want().safeTransferFrom(msg.sender, address(this), _amount);
         earn();
         uint256 _after = balance();
-
-        uint256 _expectedAmount = _amount;
-        uint256 _calculatedAmount = _after - _pool;
-        uint256 delta = MathUpgradeable.max(_expectedAmount, _calculatedAmount) - MathUpgradeable.min(_expectedAmount, _calculatedAmount);
-
-        // Check the difference between the expected and actual amount received by the strategy to detect inflationary or deflationary tokens.  
-        // If the difference is within 1 wei, assume it is an acceptable rounding error and proceed with the expected amount, otherwise, use the actual amount.
-        if(delta > 1) {
-            _amount = _calculatedAmount;
-        } else {
-            _amount = _expectedAmount;
-        }
-        
+        _amount = _after - _pool; // Additional check for deflationary tokens
         uint256 shares = 0;
         if (totalSupply() == 0) {
             shares = _amount;
