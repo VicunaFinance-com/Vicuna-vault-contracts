@@ -39,11 +39,6 @@ contract BeefyWrapper is ERC4626Upgradeable {
     error MissingShares();
 
     /**
-     * @notice Error for when the assets are not transferred correctly
-     */
-    error LeftOverAssets();
-
-    /**
      * @notice Address of the vault being wrapped
      */
     address public vault;
